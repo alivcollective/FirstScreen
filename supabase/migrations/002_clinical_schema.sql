@@ -8,10 +8,24 @@
 -- ============================================================
 
 -- ─────────────────────────────────────────────────────────────
+-- DROP LEGACY TABLES FROM 001 SCHEMA
+-- (001 schema has older versions of these tables with different columns)
+-- CASCADE drops dependent policies, indexes, and foreign keys automatically
+-- ─────────────────────────────────────────────────────────────
+drop table if exists public.differential_dx        cascade;
+drop table if exists public.clinical_sessions      cascade;
+drop table if exists public.risk_tools             cascade;
+drop table if exists public.social_history_questions cascade;
+drop table if exists public.symptom_conditions     cascade;
+drop table if exists public.symptom_sessions       cascade;
+drop table if exists public.symptoms               cascade;
+drop table if exists public.conditions             cascade;
+
+-- ─────────────────────────────────────────────────────────────
 -- SYMPTOMS TABLE
 -- ICD-11 coded symptoms for clinical-grade documentation
 -- ─────────────────────────────────────────────────────────────
-create table if not exists public.symptoms (
+create table public.symptoms (
   id           uuid default uuid_generate_v4() primary key,
   code         text unique not null,      -- ICD-11 symptom/sign code
   name_th      text not null,             -- ชื่อไทย
@@ -41,7 +55,7 @@ comment on table public.symptoms is
 -- CONDITIONS TABLE
 -- ICD-11 coded diagnoses for differential diagnosis engine
 -- ─────────────────────────────────────────────────────────────
-create table if not exists public.conditions (
+create table public.conditions (
   id                  uuid default uuid_generate_v4() primary key,
   icd11_code          text unique not null,
   name_th             text not null,
@@ -70,7 +84,7 @@ comment on table public.conditions is
 -- Core engine: symptom + patient modifiers → condition probability
 -- Based on: Harrison's IM, Thai MoPH CPGs, WHO ICD-11 guidelines
 -- ─────────────────────────────────────────────────────────────
-create table if not exists public.differential_dx (
+create table public.differential_dx (
   id           uuid default uuid_generate_v4() primary key,
   condition_id uuid not null references public.conditions(id) on delete cascade,
   symptom_id   uuid not null references public.symptoms(id) on delete cascade,
@@ -122,7 +136,7 @@ comment on table public.differential_dx is
 -- SOCIAL HISTORY QUESTIONS
 -- Standardized questionnaire matching AUDIT-C, WHO, Thai MoPH
 -- ─────────────────────────────────────────────────────────────
-create table if not exists public.social_history_questions (
+create table public.social_history_questions (
   id              uuid default uuid_generate_v4() primary key,
   category        text not null
     check (category in ('smoking','alcohol','exercise','diet','occupation','travel','sexual')),
@@ -142,7 +156,7 @@ create table if not exists public.social_history_questions (
 -- RISK ASSESSMENT TOOLS
 -- Validated scoring tools stored as structured data
 -- ─────────────────────────────────────────────────────────────
-create table if not exists public.risk_tools (
+create table public.risk_tools (
   id                   uuid default uuid_generate_v4() primary key,
   tool_key             text unique not null,
   name_th              text not null,
@@ -163,7 +177,7 @@ create table if not exists public.risk_tools (
 -- Anonymous session storage for symptom checker + risk assessments
 -- NO PII stored by design (privacy by default)
 -- ─────────────────────────────────────────────────────────────
-create table if not exists public.clinical_sessions (
+create table public.clinical_sessions (
   id             uuid default uuid_generate_v4() primary key,
   session_token  text unique not null,  -- browser-generated UUID, no user link
 
@@ -274,6 +288,16 @@ alter table public.differential_dx        enable row level security;
 alter table public.social_history_questions enable row level security;
 alter table public.risk_tools             enable row level security;
 alter table public.clinical_sessions      enable row level security;
+
+-- Drop policies first (idempotent — safe to re-run)
+drop policy if exists "public_read_symptoms"             on public.symptoms;
+drop policy if exists "public_read_conditions"           on public.conditions;
+drop policy if exists "public_read_differential_dx"      on public.differential_dx;
+drop policy if exists "public_read_social_hx_questions"  on public.social_history_questions;
+drop policy if exists "public_read_risk_tools"           on public.risk_tools;
+drop policy if exists "anon_insert_session"              on public.clinical_sessions;
+drop policy if exists "anon_update_session"              on public.clinical_sessions;
+drop policy if exists "read_session_by_token"            on public.clinical_sessions;
 
 -- Public read for clinical reference tables
 create policy "public_read_symptoms"
