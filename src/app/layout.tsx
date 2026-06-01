@@ -29,8 +29,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
 
   title: {
-    template: "%s | Health Compass",
-    default: "Health Compass — รู้ความเสี่ยง ก่อนโรครู้จักคุณ",
+    template: "%s | FirstScreen",
+    default: "FirstScreen — รู้ความเสี่ยง ก่อนโรครู้จักคุณ",
   },
 
   description:
@@ -40,12 +40,12 @@ export const metadata: Metadata = {
     "สุขภาพ", "ตรวจสุขภาพ", "ประเมินความเสี่ยง", "ตรวจอาการ",
     "มะเร็ง", "เบาหวาน", "ความดันโลหิตสูง", "โรคหัวใจ",
     "health screening Thailand", "preventive health", "risk assessment",
-    "Thailand health", "สุขภาพเชิงป้องกัน", "health compass",
+    "Thailand health", "สุขภาพเชิงป้องกัน", "firstscreen",
   ],
 
-  authors: [{ name: "Health Compass Team", url: BASE_URL }],
-  creator: "Health Compass",
-  publisher: "Health Compass",
+  authors: [{ name: "FirstScreen Team", url: BASE_URL }],
+  creator: "FirstScreen",
+  publisher: "FirstScreen",
 
   // hreflang — 8 languages as planned
   alternates: {
@@ -80,8 +80,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "th_TH",
     alternateLocale: ["en_US", "zh_CN", "ja_JP", "ko_KR"],
-    siteName: "Health Compass",
-    title: "Health Compass — รู้ความเสี่ยง ก่อนโรครู้จักคุณ",
+    siteName: "FirstScreen",
+    title: "FirstScreen — รู้ความเสี่ยง ก่อนโรครู้จักคุณ",
     description: "ประเมินความเสี่ยงโรค วางแผนตรวจคัดกรอง ข้อมูลอ้างอิงหลักฐาน Thailand-first",
     url: BASE_URL,
     images: [
@@ -89,14 +89,14 @@ export const metadata: Metadata = {
         url: `${BASE_URL}/og?title=รู้ความเสี่ยง ก่อนโรครู้จักคุณ&subtitle=แพลตฟอร์มนำทางสุขภาพเชิงป้องกัน Thailand-first`,
         width: 1200,
         height: 630,
-        alt: "Health Compass — แพลตฟอร์มนำทางสุขภาพเชิงป้องกัน",
+        alt: "FirstScreen — แพลตฟอร์มนำทางสุขภาพเชิงป้องกัน",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Health Compass — รู้ความเสี่ยง ก่อนโรครู้จักคุณ",
+    title: "FirstScreen — รู้ความเสี่ยง ก่อนโรครู้จักคุณ",
     description: "แพลตฟอร์มนำทางสุขภาพเชิงป้องกัน ประเมินความเสี่ยง วางแผนตรวจคัดกรอง",
     images: [`${BASE_URL}/og?title=รู้ความเสี่ยง ก่อนโรครู้จักคุณ`],
   },
@@ -134,7 +134,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/brand/firstscreen-icon.png" type="image/png" />
       </head>
       <body className="min-h-full flex flex-col font-sans">
         {/* Global WebSite JSON-LD */}

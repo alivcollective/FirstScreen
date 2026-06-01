@@ -1,6 +1,6 @@
 {
   "site": {
-    "name": "Health Compass",
+    "name": "FirstScreen",
     "tagline": "Navigate Your Health Journey",
     "description": "Your trusted guide to preventive healthcare. Understand your risks, plan your screenings, and navigate to the right care."
   },
@@ -492,7 +492,7 @@
       "cookiePolicy": "Cookie Policy",
       "pdpaCompliance": "PDPA Compliance"
     },
-    "copyright": "© 2026 Health Compass. All rights reserved. Thailand · Southeast Asia · Global.",
+    "copyright": "© 2026 FirstScreen. All rights reserved. Thailand · Southeast Asia · Global.",
     "availableIn": "Available in:"
   },
   "disclaimer": {

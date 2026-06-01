@@ -1,14 +1,19 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Heart, ArrowLeft, Search, Activity } from 'lucide-react'
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center px-6 text-center">
       <div className="mb-8">
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500 to-teal-600 mx-auto mb-4">
-          <Heart className="h-8 w-8 text-white" strokeWidth={2.5} />
-        </div>
-        <span className="text-slate-500 text-sm font-medium">Health Compass</span>
+        <Image
+          src="/brand/firstscreen-icon.png"
+          alt="FirstScreen"
+          width={64}
+          height={64}
+          className="mx-auto mb-4 h-16 w-16 rounded-2xl object-cover shadow-sm"
+        />
+        <span className="text-slate-500 text-sm font-medium">FirstScreen</span>
       </div>
 
       <h1 className="text-6xl font-black text-white mb-3">404</h1>

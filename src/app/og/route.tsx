@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
           }}>
             <span style={{ color: 'white', fontSize: '28px' }}>+</span>
           </div>
-          <span style={{ color: 'white', fontSize: '26px', fontWeight: '700' }}>Health Compass</span>
+          <span style={{ color: 'white', fontSize: '26px', fontWeight: '700' }}>FirstScreen</span>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
             </div>
           ))}
           <div style={{ flex: 1 }} />
-          <span style={{ color: '#475569', fontSize: '15px' }}>healthcompass.th</span>
+          <span style={{ color: '#475569', fontSize: '15px' }}>firstscreen.health</span>
         </div>
       </div>
     ),

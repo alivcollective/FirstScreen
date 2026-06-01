@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server'
+import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import { Heart, Shield, BookOpen, AlertCircle } from 'lucide-react'
 
@@ -55,9 +56,13 @@ export async function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 group mb-4">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600">
-                <Heart className="h-5 w-5 text-white" strokeWidth={2.5} />
-              </div>
+              <Image
+                src="/brand/firstscreen-icon.png"
+                alt="FirstScreen"
+                width={36}
+                height={36}
+                className="h-9 w-9 rounded-xl object-cover shadow-sm"
+              />
               <span className="text-lg font-bold text-white">{t('site.name')}</span>
             </Link>
             <p className="text-sm text-slate-400 leading-relaxed mb-6">

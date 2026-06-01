@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter, usePathname, Link } from '@/i18n/navigation'
-import { Menu, X, Globe, ChevronDown, Heart, Search } from 'lucide-react'
+import { Menu, X, Globe, ChevronDown, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -47,11 +48,15 @@ export function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-teal-500 to-teal-600 shadow-sm">
-              <Heart className="h-4 w-4 text-white" strokeWidth={2.5} />
-            </div>
+            <Image
+              src="/brand/firstscreen-icon.png"
+              alt="FirstScreen"
+              width={32}
+              height={32}
+              className="h-8 w-8 rounded-lg object-cover shadow-sm"
+            />
             <span className="text-base font-bold text-slate-900 tracking-tight">
-              Health Compass
+              FirstScreen
             </span>
           </Link>
 
