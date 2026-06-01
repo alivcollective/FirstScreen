@@ -1,3 +1,1000 @@
+
+-- ============================================================
+-- BEGIN supabase/migrations/001_initial_schema.sql
+-- ============================================================
+
+-- Health Compass — Initial Schema Migration
+-- v1.0.0 — Thailand Launch
+
+-- Extensions
+create extension if not exists "uuid-ossp";
+create extension if not exists "vector";
+create extension if not exists "pg_trgm";
+
+-- ============================================================
+-- DOMAIN 1: IDENTITY & PRIVACY
+-- ============================================================
+
+create table users (
+  id uuid primary key default gen_random_uuid(),
+  email_hash text unique,
+  phone_hash text unique,
+  created_at timestamptz default now(),
+  last_active_at timestamptz,
+  account_status text default 'active' check (account_status in ('active', 'suspended', 'deleted')),
+  deletion_requested_at timestamptz,
+  country_code char(2) not null default 'TH',
+  preferred_language char(5) default 'th',
+  timezone text default 'Asia/Bangkok'
+);
+
+create table user_pii (
+  user_id uuid primary key references users(id) on delete cascade,
+  encrypted_email bytea,
+  encrypted_phone bytea,
+  encrypted_name bytea,
+  encryption_key_id text,
+  updated_at timestamptz default now()
+);
+
+create table consent_records (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references users(id) on delete cascade,
+  consent_type text not null check (consent_type in ('analytics', 'marketing', 'research', 'ai_training', 'data_sharing')),
+  granted boolean not null,
+  granted_at timestamptz,
+  withdrawn_at timestamptz,
+  consent_version text not null,
+  ip_address_hash text,
+  user_agent_hash text
+);
+
+create table health_profiles (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid unique references users(id) on delete cascade,
+  birth_year smallint,
+  biological_sex text check (biological_sex in ('male', 'female', 'intersex', 'prefer_not_to_say')),
+  height_cm numeric(5,1),
+  weight_kg numeric(5,1),
+  country_code char(2),
+  province text,
+  ethnicity text[],
+  is_smoker boolean default false,
+  smoking_pack_years numeric(5,1),
+  alcohol_units_per_week smallint default 0,
+  exercise_days_per_week smallint default 0 check (exercise_days_per_week between 0 and 7),
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- ============================================================
+-- DOMAIN 2: MEDICAL REVIEWERS
+-- ============================================================
+
+create table medical_reviewers (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  credentials text[],
+  specialties text[],
+  institution text,
+  country_code char(2),
+  is_active boolean default true
+);
+
+-- ============================================================
+-- DOMAIN 3: DISEASE INTELLIGENCE
+-- ============================================================
+
+create table conditions (
+  id uuid primary key default gen_random_uuid(),
+  icd10_code text,
+  icd11_code text,
+  snomed_code text,
+  slug text unique not null,
+  category text,
+  subcategory text,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+create index idx_conditions_icd10 on conditions(icd10_code);
+create index idx_conditions_slug on conditions(slug);
+
+create table condition_translations (
+  id uuid primary key default gen_random_uuid(),
+  condition_id uuid references conditions(id) on delete cascade,
+  language_code char(5) not null,
+  name text not null,
+  short_description text,
+  full_description text,
+  symptoms_text text,
+  risk_factors_text text,
+  prevention_text text,
+  treatment_overview text,
+  when_to_see_doctor text,
+  key_fact text,
+  search_vector tsvector,
+  unique(condition_id, language_code)
+);
+
+create index idx_condition_translations_search on condition_translations using gin(search_vector);
+create index idx_condition_translations_trgm on condition_translations using gin(name gin_trgm_ops);
+
+-- Trigger to update search vector
+create or replace function update_condition_search_vector()
+returns trigger as $$
+begin
+  new.search_vector :=
+    setweight(to_tsvector('simple', coalesce(new.name, '')), 'A') ||
+    setweight(to_tsvector('simple', coalesce(new.short_description, '')), 'B') ||
+    setweight(to_tsvector('simple', coalesce(new.symptoms_text, '')), 'C');
+  return new;
+end;
+$$ language plpgsql;
+
+create trigger condition_translation_search_update
+  before insert or update on condition_translations
+  for each row execute function update_condition_search_vector();
+
+create table condition_evidence (
+  id uuid primary key default gen_random_uuid(),
+  condition_id uuid references conditions(id) on delete cascade,
+  claim_type text,
+  evidence_grade text check (evidence_grade in ('A', 'B', 'C', 'D')),
+  source_type text,
+  source_name text,
+  source_url text,
+  doi text,
+  publication_year smallint,
+  last_reviewed_at date
+);
+
+create table content_reviews (
+  id uuid primary key default gen_random_uuid(),
+  content_type text not null,
+  content_id uuid not null,
+  reviewer_id uuid references medical_reviewers(id),
+  review_status text check (review_status in ('pending', 'approved', 'rejected', 'needs_revision')),
+  reviewed_at timestamptz,
+  next_review_date date,
+  review_notes text,
+  version_reviewed text
+);
+
+create table family_history (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references users(id) on delete cascade,
+  condition_id uuid references conditions(id),
+  relationship text check (relationship in ('parent', 'sibling', 'grandparent', 'aunt_uncle')),
+  age_of_onset smallint,
+  created_at timestamptz default now()
+);
+
+-- ============================================================
+-- DOMAIN 4: SYMPTOMS
+-- ============================================================
+
+create table symptoms (
+  id uuid primary key default gen_random_uuid(),
+  snomed_code text,
+  slug text unique not null,
+  body_system text,
+  urgency_level text check (urgency_level in ('routine', 'soon', 'urgent', 'emergency')),
+  created_at timestamptz default now()
+);
+
+create table symptom_translations (
+  id uuid primary key default gen_random_uuid(),
+  symptom_id uuid references symptoms(id) on delete cascade,
+  language_code char(5) not null,
+  name text not null,
+  description text,
+  unique(symptom_id, language_code)
+);
+
+create table symptom_conditions (
+  symptom_id uuid references symptoms(id),
+  condition_id uuid references conditions(id),
+  frequency text check (frequency in ('very_common', 'common', 'uncommon', 'rare')),
+  specificity numeric(4,3),
+  sensitivity numeric(4,3),
+  primary key (symptom_id, condition_id)
+);
+
+create table symptom_sessions (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references users(id),
+  session_token text,
+  symptoms_reported jsonb,
+  navigation_output jsonb,
+  care_recommendation text,
+  urgency_level text,
+  country_code char(2),
+  created_at timestamptz default now()
+);
+
+-- ============================================================
+-- DOMAIN 5: SCREENING
+-- ============================================================
+
+create table screening_tests (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  condition_id uuid references conditions(id),
+  test_type text check (test_type in ('blood_test', 'imaging', 'physical_exam', 'questionnaire', 'biopsy', 'endoscopy')),
+  sensitivity numeric(4,3),
+  specificity numeric(4,3),
+  created_at timestamptz default now()
+);
+
+create table screening_test_translations (
+  screening_test_id uuid references screening_tests(id) on delete cascade,
+  language_code char(5),
+  name text not null,
+  description text,
+  preparation_instructions text,
+  what_to_expect text,
+  primary key (screening_test_id, language_code)
+);
+
+create table screening_guidelines (
+  id uuid primary key default gen_random_uuid(),
+  screening_test_id uuid references screening_tests(id),
+  country_code char(2) not null,
+  issuing_organization text not null,
+  guideline_name text,
+  guideline_url text,
+  guideline_version text,
+  published_date date,
+  min_age smallint,
+  max_age smallint,
+  biological_sex text check (biological_sex in ('all', 'male', 'female')),
+  frequency_months smallint,
+  additional_criteria jsonb,
+  is_universal boolean default false,
+  is_active boolean default true,
+  created_at timestamptz default now()
+);
+
+create index idx_screening_guidelines_country on screening_guidelines(country_code, biological_sex, min_age, max_age);
+
+create table screening_plans (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references users(id) on delete cascade,
+  screening_test_id uuid references screening_tests(id),
+  guideline_id uuid references screening_guidelines(id),
+  recommended_date date,
+  completed_date date,
+  reminder_enabled boolean default true,
+  reminder_days_before integer default 30,
+  notes text,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- ============================================================
+-- DOMAIN 6: RISK ASSESSMENT
+-- ============================================================
+
+create table risk_calculators (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  name text not null,
+  category text check (category in ('cardiovascular', 'diabetes', 'cancer', 'mental_health', 'lifestyle', 'renal', 'respiratory')),
+  validated_populations text[],
+  source_publication text,
+  doi text,
+  version text,
+  is_active boolean default true,
+  created_at timestamptz default now()
+);
+
+create table risk_assessments (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references users(id) on delete cascade,
+  calculator_id uuid references risk_calculators(id),
+  inputs jsonb not null,
+  raw_score numeric(8,4),
+  risk_category text check (risk_category in ('low', 'moderate', 'high', 'very_high')),
+  risk_percentage numeric(5,2),
+  risk_label text,
+  action_plan jsonb,
+  created_at timestamptz default now()
+);
+
+create index idx_risk_assessments_user on risk_assessments(user_id, created_at desc);
+
+-- ============================================================
+-- DOMAIN 7: HEALTHCARE PROVIDERS
+-- ============================================================
+
+create table provider_organizations (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  organization_type text check (organization_type in ('hospital', 'clinic', 'specialist_center', 'screening_center', 'pharmacy')),
+  country_code char(2) not null,
+  province text,
+  city text,
+  address jsonb,
+  lat numeric(9,6),
+  lng numeric(9,6),
+  phone text,
+  website text,
+  email text,
+  accreditations text[],
+  accreditation_details jsonb,
+  languages_spoken char(5)[],
+  insurance_accepted text[],
+  operating_hours jsonb,
+  rating_average numeric(3,2),
+  rating_count integer default 0,
+  is_verified boolean default false,
+  verified_at timestamptz,
+  is_active boolean default true,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+create index idx_providers_country on provider_organizations(country_code, is_active);
+
+create table provider_translations (
+  provider_id uuid references provider_organizations(id) on delete cascade,
+  language_code char(5),
+  name text not null,
+  description text,
+  specialties_text text,
+  primary key (provider_id, language_code)
+);
+
+create table provider_services (
+  id uuid primary key default gen_random_uuid(),
+  provider_id uuid references provider_organizations(id),
+  service_type text,
+  screening_test_id uuid references screening_tests(id),
+  price_thb numeric(10,2),
+  price_usd numeric(10,2),
+  duration_minutes smallint,
+  appointment_required boolean default true,
+  booking_url text,
+  is_active boolean default true
+);
+
+-- ============================================================
+-- DOMAIN 8: CONTENT & ACADEMY
+-- ============================================================
+
+create table articles (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  article_type text check (article_type in ('disease_guide', 'prevention_tip', 'screening_guide', 'lifestyle', 'news')),
+  condition_id uuid references conditions(id),
+  author_id uuid references medical_reviewers(id),
+  published_at timestamptz,
+  is_published boolean default false,
+  reading_time_minutes smallint,
+  feature_image_url text,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+create table article_translations (
+  article_id uuid references articles(id) on delete cascade,
+  language_code char(5),
+  title text not null,
+  subtitle text,
+  content jsonb,
+  meta_description text,
+  search_vector tsvector,
+  primary key (article_id, language_code)
+);
+
+create table courses (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  category text,
+  difficulty_level text check (difficulty_level in ('beginner', 'intermediate', 'advanced')),
+  estimated_minutes smallint,
+  certificate_available boolean default false,
+  thumbnail_url text,
+  is_published boolean default false,
+  created_at timestamptz default now()
+);
+
+create table course_translations (
+  course_id uuid references courses(id) on delete cascade,
+  language_code char(5),
+  title text not null,
+  description text,
+  primary key (course_id, language_code)
+);
+
+create table course_modules (
+  id uuid primary key default gen_random_uuid(),
+  course_id uuid references courses(id) on delete cascade,
+  sequence_number smallint not null,
+  module_type text check (module_type in ('video', 'text', 'quiz', 'infographic')),
+  video_url text,
+  content jsonb,
+  duration_minutes smallint,
+  created_at timestamptz default now()
+);
+
+create table user_course_progress (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references users(id) on delete cascade,
+  course_id uuid references courses(id),
+  modules_completed integer default 0,
+  total_modules integer,
+  is_completed boolean default false,
+  completed_at timestamptz,
+  certificate_url text,
+  last_activity_at timestamptz,
+  unique(user_id, course_id)
+);
+
+-- ============================================================
+-- DOMAIN 9: ANALYTICS & AUDIT
+-- ============================================================
+
+create table population_events (
+  id uuid primary key default gen_random_uuid(),
+  event_type text not null,
+  country_code char(2),
+  region text,
+  age_band text,
+  biological_sex text,
+  condition_slug text,
+  risk_category text,
+  action_taken boolean,
+  created_at timestamptz default now()
+);
+
+create index idx_population_events_analytics on population_events(country_code, event_type, created_at);
+
+create table audit_log (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid,
+  action text not null,
+  resource_type text,
+  resource_id uuid,
+  ip_address_hash text,
+  user_agent_hash text,
+  metadata jsonb,
+  created_at timestamptz default now()
+);
+
+create index idx_audit_log_user on audit_log(user_id, created_at desc);
+
+-- Vector embeddings for semantic search
+create table content_embeddings (
+  id uuid primary key default gen_random_uuid(),
+  content_type text check (content_type in ('condition', 'article', 'symptom', 'course')),
+  content_id uuid not null,
+  language_code char(5),
+  embedding vector(1536),
+  created_at timestamptz default now()
+);
+
+create index idx_content_embeddings on content_embeddings using ivfflat (embedding vector_cosine_ops) with (lists = 100);
+
+-- ============================================================
+-- SEED DATA: Risk Calculators
+-- ============================================================
+
+insert into risk_calculators (slug, name, category, validated_populations, source_publication, version, is_active)
+values
+  ('findrisc-asian-adapted', 'FINDRISC Diabetes Risk Score (Asian Adapted)', 'diabetes',
+   array['thai', 'asian', 'southeast_asian'],
+   'Lindström & Tuomilehto, Diabetes Care 2003 — adapted WHO Asia-Pacific BMI thresholds', '2.0', true),
+  ('framingham-cvd-10year', 'Framingham 10-Year Cardiovascular Risk Score', 'cardiovascular',
+   array['thai', 'asian', 'general'],
+   'D''Agostino et al, Circulation 2008', '2.0', true),
+  ('phq-9', 'Patient Health Questionnaire-9 (Depression)', 'mental_health',
+   array['general', 'thai'],
+   'Kroenke K et al, J Gen Intern Med 2001', '1.0', true),
+  ('gad-7', 'Generalized Anxiety Disorder 7-item scale', 'mental_health',
+   array['general', 'thai'],
+   'Spitzer et al, Arch Intern Med 2006', '1.0', true);
+
+-- ============================================================
+-- ROW LEVEL SECURITY
+-- ============================================================
+
+alter table health_profiles enable row level security;
+alter table risk_assessments enable row level security;
+alter table screening_plans enable row level security;
+alter table user_course_progress enable row level security;
+alter table family_history enable row level security;
+alter table consent_records enable row level security;
+alter table symptom_sessions enable row level security;
+
+-- Users see only their own data
+create policy "users_own_health_profile" on health_profiles
+  for all using (auth.uid()::uuid = user_id);
+
+create policy "users_own_risk_assessments" on risk_assessments
+  for all using (auth.uid()::uuid = user_id);
+
+create policy "users_own_screening_plans" on screening_plans
+  for all using (auth.uid()::uuid = user_id);
+
+create policy "users_own_course_progress" on user_course_progress
+  for all using (auth.uid()::uuid = user_id);
+
+create policy "users_own_family_history" on family_history
+  for all using (auth.uid()::uuid = user_id);
+
+create policy "users_own_consents" on consent_records
+  for all using (auth.uid()::uuid = user_id);
+
+-- Public read access for content
+alter table conditions enable row level security;
+create policy "public_read_conditions" on conditions for select using (true);
+
+alter table condition_translations enable row level security;
+create policy "public_read_condition_translations" on condition_translations for select using (true);
+
+alter table screening_guidelines enable row level security;
+create policy "public_read_screening_guidelines" on screening_guidelines for select using (true);
+
+alter table provider_organizations enable row level security;
+create policy "public_read_providers" on provider_organizations for select using (is_active = true);
+
+alter table articles enable row level security;
+create policy "public_read_published_articles" on articles for select using (is_published = true);
+
+alter table courses enable row level security;
+create policy "public_read_published_courses" on courses for select using (is_published = true);
+
+
+-- ============================================================
+-- END supabase/migrations/001_initial_schema.sql
+-- ============================================================
+
+
+-- ============================================================
+-- BEGIN supabase/migrations/002_clinical_schema.sql
+-- ============================================================
+
+-- ============================================================
+-- Health Compass — Clinical Schema Migration v2.0
+-- Clinical-grade database for Symptom Checker & Risk Assessment
+-- Standards: ICD-11, WHO Guidelines, Thai MoPH, OLDCARTS
+-- ============================================================
+-- SAFETY NOTE: All content is educational only.
+-- Must be reviewed by licensed physicians before production use.
+-- ============================================================
+
+-- ─────────────────────────────────────────────────────────────
+-- DROP LEGACY TABLES FROM 001 SCHEMA
+-- (001 schema has older versions of these tables with different columns)
+-- CASCADE drops dependent policies, indexes, and foreign keys automatically
+-- ─────────────────────────────────────────────────────────────
+drop table if exists public.differential_dx        cascade;
+drop table if exists public.clinical_sessions      cascade;
+drop table if exists public.risk_tools             cascade;
+drop table if exists public.social_history_questions cascade;
+drop table if exists public.symptom_conditions     cascade;
+drop table if exists public.symptom_sessions       cascade;
+drop table if exists public.symptoms               cascade;
+drop table if exists public.conditions             cascade;
+
+-- ─────────────────────────────────────────────────────────────
+-- SYMPTOMS TABLE
+-- ICD-11 coded symptoms for clinical-grade documentation
+-- ─────────────────────────────────────────────────────────────
+create table public.symptoms (
+  id           uuid default uuid_generate_v4() primary key,
+  code         text unique not null,      -- ICD-11 symptom/sign code
+  name_th      text not null,             -- ชื่อไทย
+  name_en      text not null,             -- English name
+  body_region  text not null
+    check (body_region in ('head','chest','abdomen','back','limbs','skin','general')),
+  system       text not null
+    check (system in ('neurological','cardiovascular','respiratory','GI',
+                      'musculoskeletal','dermatological','psychiatric','endocrine','general')),
+  severity_weight integer not null
+    check (severity_weight between 1 and 4),
+    -- 1=low concern, 2=moderate, 3=high, 4=critical/emergency
+  is_emergency boolean not null default false,
+    -- true = immediately show 1669 banner
+  follow_up_questions jsonb not null default '[]',
+    -- OLDCARTS-structured follow-up questions for this symptom
+    -- Schema: [{ key, q_th, q_en, type, options, depends_on, depends_value }]
+  created_at   timestamptz not null default now()
+);
+
+comment on table public.symptoms is
+  'ICD-11 coded symptoms. severity_weight 4 + is_emergency=true triggers immediate 1669 banner.
+   follow_up_questions implements OLDCARTS framework per symptom.
+   REQUIRES medical review before adding/editing entries.';
+
+-- ─────────────────────────────────────────────────────────────
+-- CONDITIONS TABLE
+-- ICD-11 coded diagnoses for differential diagnosis engine
+-- ─────────────────────────────────────────────────────────────
+create table public.conditions (
+  id                  uuid default uuid_generate_v4() primary key,
+  icd11_code          text unique not null,
+  name_th             text not null,
+  name_en             text not null,
+  category            text not null
+    check (category in ('cancer','cardiovascular','endocrine','infectious','psychiatric',
+                        'neurological','respiratory','GI','musculoskeletal','other')),
+  severity            text not null
+    check (severity in ('mild','moderate','severe','critical')),
+  urgency_level       integer not null
+    check (urgency_level between 1 and 4),
+    -- 1=routine, 2=see doctor within weeks, 3=urgent 24-48h, 4=emergency now
+  prevalence_thailand text,               -- Thai epidemiology context
+  specialty_required  text,               -- อายุรแพทย์ / ศัลยแพทย์ ฯลฯ
+  encyclopedia_slug   text,               -- link to /diseases/[slug]
+  created_at          timestamptz not null default now()
+);
+
+comment on table public.conditions is
+  'ICD-11 coded conditions used in differential diagnosis.
+   urgency_level drives UI: 4=immediate ER, 3=urgent clinic, 2=schedule, 1=routine.
+   REQUIRES medical review.';
+
+-- ─────────────────────────────────────────────────────────────
+-- DIFFERENTIAL DIAGNOSIS MAPPING
+-- Core engine: symptom + patient modifiers → condition probability
+-- Based on: Harrison's IM, Thai MoPH CPGs, WHO ICD-11 guidelines
+-- ─────────────────────────────────────────────────────────────
+create table public.differential_dx (
+  id           uuid default uuid_generate_v4() primary key,
+  condition_id uuid not null references public.conditions(id) on delete cascade,
+  symptom_id   uuid not null references public.symptoms(id) on delete cascade,
+
+  -- Base likelihood: P(condition | symptom) from clinical literature
+  -- Range 0.0–1.0; used as starting weight before modifiers
+  base_score   numeric not null check (base_score between 0 and 1),
+
+  -- ── Demographic modifiers (added to base_score) ─────────────
+  -- Positive = increases likelihood, negative = decreases
+  modifier_age_over_50   numeric not null default 0,
+  modifier_age_over_60   numeric not null default 0,
+  modifier_male          numeric not null default 0,
+  modifier_female        numeric not null default 0,
+
+  -- ── Lifestyle/risk factor modifiers ─────────────────────────
+  modifier_smoker        numeric not null default 0,
+  modifier_ex_smoker_5y  numeric not null default 0,   -- quit < 5 years
+  modifier_heavy_alcohol numeric not null default 0,   -- AUDIT-C ≥ 3/4
+  modifier_obese         numeric not null default 0,   -- BMI ≥ 30
+  modifier_sedentary     numeric not null default 0,   -- <1 exercise day/wk
+
+  -- ── Comorbidity modifiers ────────────────────────────────────
+  modifier_diabetes      numeric not null default 0,
+  modifier_hypertension  numeric not null default 0,
+  modifier_hbv           numeric not null default 0,   -- HBV carrier
+  modifier_hiv           numeric not null default 0,
+  modifier_family_hx     numeric not null default 0,   -- family history of condition
+
+  -- ── Symptom characteristic modifiers ────────────────────────
+  modifier_duration_chronic  numeric not null default 0, -- > 4 weeks
+  modifier_duration_acute    numeric not null default 0, -- < 48 hours
+  modifier_severity_high     numeric not null default 0, -- severity ≥ 7/10
+  modifier_sudden_onset      numeric not null default 0,
+  modifier_worsening         numeric not null default 0,
+  modifier_night_predominant numeric not null default 0, -- worse at night
+
+  unique (condition_id, symptom_id)
+);
+
+comment on table public.differential_dx is
+  'Core symptom→condition likelihood engine.
+   Final score = base_score + applicable modifiers, capped at 1.0.
+   Multiple symptoms for same condition are combined.
+   Scores normalized to 0–100 in application layer.
+   All scores must be validated by physician before production.';
+
+-- ─────────────────────────────────────────────────────────────
+-- SOCIAL HISTORY QUESTIONS
+-- Standardized questionnaire matching AUDIT-C, WHO, Thai MoPH
+-- ─────────────────────────────────────────────────────────────
+create table public.social_history_questions (
+  id              uuid default uuid_generate_v4() primary key,
+  category        text not null
+    check (category in ('smoking','alcohol','exercise','diet','occupation','travel','sexual')),
+  question_key    text unique not null,
+  question_th     text not null,
+  question_en     text not null,
+  input_type      text not null
+    check (input_type in ('radio','number','select','boolean','text')),
+  options         jsonb,               -- array of option strings for radio/select
+  depends_on      text,                -- question_key that must be answered first
+  depends_value   text,                -- value that triggers this question
+  display_order   integer not null,
+  clinical_weight text                 -- which risk calculations this affects
+);
+
+-- ─────────────────────────────────────────────────────────────
+-- RISK ASSESSMENT TOOLS
+-- Validated scoring tools stored as structured data
+-- ─────────────────────────────────────────────────────────────
+create table public.risk_tools (
+  id                   uuid default uuid_generate_v4() primary key,
+  tool_key             text unique not null,
+  name_th              text not null,
+  name_en              text not null,
+  description_th       text,
+  target_condition     text not null,
+  validated_population text,
+  reference_guideline  text,
+  questions            jsonb not null default '[]',
+  scoring_logic        jsonb not null default '{}',
+  interpretation       jsonb not null default '{}',
+  active               boolean not null default true,
+  version              text not null default '1.0'
+);
+
+-- ─────────────────────────────────────────────────────────────
+-- CLINICAL SESSIONS
+-- Anonymous session storage for symptom checker + risk assessments
+-- NO PII stored by design (privacy by default)
+-- ─────────────────────────────────────────────────────────────
+create table public.clinical_sessions (
+  id             uuid default uuid_generate_v4() primary key,
+  session_token  text unique not null,  -- browser-generated UUID, no user link
+
+  -- Demographics (age band only, not DOB)
+  age            integer check (age between 1 and 120),
+  sex            text check (sex in ('male','female','other')),
+
+  -- Chief complaint
+  chief_complaint  text,
+  symptom_ids      uuid[],            -- selected symptom UUIDs
+
+  -- OLDCARTS structured data
+  onset_date            date,
+  onset_description     text,         -- "ทันที" | "ค่อยๆ เป็น"
+  location              text,
+  duration_days         integer,
+  character_description text,
+  aggravating_factors   text[],
+  relieving_factors     text[],
+  timing                text,         -- "ตลอดเวลา" | "เป็นๆ หายๆ"
+  severity_score        integer check (severity_score between 1 and 10),
+  associated_symptoms   text[],       -- additional symptoms from OLDCARTS
+
+  -- Social History (see schema in comment)
+  social_history jsonb default '{}'::jsonb,
+  /*
+  {
+    smoking: {
+      status: "never" | "current" | "former",
+      cigarettes_per_day: number,
+      years_smoked: number,
+      pack_years: number,          -- computed: (cigs/day ÷ 20) × years
+      quit_years_ago: number
+    },
+    alcohol: {
+      status: "never" | "current" | "former",
+      audit_c_frequency: string,   -- AUDIT-C Q1 response
+      audit_c_amount: string,      -- AUDIT-C Q2 response
+      audit_c_binge: string,       -- AUDIT-C Q3 response
+      audit_c_score: number,       -- computed 0-12
+      years_drinking: number,
+      quit_years_ago: number
+    },
+    exercise: {
+      days_per_week: number,
+      minutes_per_session: number,
+      meets_who_guideline: boolean  -- ≥150 min/week
+    },
+    bmi: number,
+    height_cm: number,
+    weight_kg: number
+  }
+  */
+
+  -- Past Medical History
+  pmh_conditions     text[],          -- ["diabetes","hypertension","hbv"]
+  pmh_surgeries      text[],
+  pmh_allergies      text[],
+  current_medications text[],
+
+  -- Family History
+  family_hx jsonb default '{}'::jsonb,
+  /*
+  {
+    first_degree: {
+      heart_disease: boolean,
+      diabetes: boolean,
+      cancer: string,              -- type if any
+      stroke: boolean,
+      hypertension: boolean
+    }
+  }
+  */
+
+  -- Computed Results
+  differential_results jsonb,         -- array of {condition_id, score, confidence, matched_symptoms}
+  urgency_level        integer check (urgency_level between 1 and 4),
+  recommended_actions  text[],
+
+  -- Risk Tool Results
+  risk_results jsonb default '{}'::jsonb,
+  /*
+  {
+    framingham: { score: number, risk_pct: number, risk_category: string },
+    findrisc: { score: number, risk_category: string },
+    phq9: { score: number, severity: string },
+    gad7: { score: number, severity: string },
+    audit_c: { score: number, interpretation: string }
+  }
+  */
+
+  created_at    timestamptz not null default now(),
+  completed_at  timestamptz
+);
+
+comment on table public.clinical_sessions is
+  'Anonymous clinical sessions. session_token is browser-generated UUID.
+   No user_id column by design — privacy by default.
+   differential_results computed server-side or client-side from differential_dx table.
+   For population analytics only — no individual clinical use.';
+
+-- ─────────────────────────────────────────────────────────────
+-- ROW LEVEL SECURITY
+-- ─────────────────────────────────────────────────────────────
+alter table public.symptoms               enable row level security;
+alter table public.conditions             enable row level security;
+alter table public.differential_dx        enable row level security;
+alter table public.social_history_questions enable row level security;
+alter table public.risk_tools             enable row level security;
+alter table public.clinical_sessions      enable row level security;
+
+-- Drop policies first (idempotent — safe to re-run)
+drop policy if exists "public_read_symptoms"             on public.symptoms;
+drop policy if exists "public_read_conditions"           on public.conditions;
+drop policy if exists "public_read_differential_dx"      on public.differential_dx;
+drop policy if exists "public_read_social_hx_questions"  on public.social_history_questions;
+drop policy if exists "public_read_risk_tools"           on public.risk_tools;
+drop policy if exists "anon_insert_session"              on public.clinical_sessions;
+drop policy if exists "anon_update_session"              on public.clinical_sessions;
+drop policy if exists "read_session_by_token"            on public.clinical_sessions;
+
+-- Public read for clinical reference tables
+create policy "public_read_symptoms"
+  on public.symptoms for select using (true);
+
+create policy "public_read_conditions"
+  on public.conditions for select using (true);
+
+create policy "public_read_differential_dx"
+  on public.differential_dx for select using (true);
+
+create policy "public_read_social_hx_questions"
+  on public.social_history_questions for select using (true);
+
+create policy "public_read_risk_tools"
+  on public.risk_tools for select using (active = true);
+
+-- Sessions: anonymous insert + read by token
+create policy "anon_insert_session"
+  on public.clinical_sessions for insert to anon with check (true);
+
+create policy "anon_update_session"
+  on public.clinical_sessions for update to anon using (true);
+
+create policy "read_session_by_token"
+  on public.clinical_sessions for select using (true);
+
+-- ─────────────────────────────────────────────────────────────
+-- INDEXES
+-- ─────────────────────────────────────────────────────────────
+create index if not exists symptoms_body_region_idx   on public.symptoms(body_region);
+create index if not exists symptoms_system_idx        on public.symptoms(system);
+create index if not exists symptoms_emergency_idx     on public.symptoms(is_emergency) where is_emergency = true;
+create index if not exists symptoms_code_idx          on public.symptoms(code);
+
+create index if not exists conditions_category_idx    on public.conditions(category);
+create index if not exists conditions_urgency_idx     on public.conditions(urgency_level);
+create index if not exists conditions_icd11_idx       on public.conditions(icd11_code);
+
+create index if not exists diff_dx_condition_idx      on public.differential_dx(condition_id);
+create index if not exists diff_dx_symptom_idx        on public.differential_dx(symptom_id);
+create index if not exists diff_dx_base_score_idx     on public.differential_dx(base_score desc);
+
+create index if not exists social_hx_category_idx     on public.social_history_questions(category);
+create index if not exists social_hx_order_idx        on public.social_history_questions(display_order);
+
+create index if not exists clinical_sessions_token_idx on public.clinical_sessions(session_token);
+create index if not exists clinical_sessions_age_idx   on public.clinical_sessions(age, sex);
+
+-- ─────────────────────────────────────────────────────────────
+-- HELPER FUNCTION: Compute differential dx score for a session
+-- Called from application layer to get sorted conditions
+-- ─────────────────────────────────────────────────────────────
+create or replace function compute_differential_dx(
+  p_symptom_ids    uuid[],
+  p_age            integer default null,
+  p_sex            text default null,
+  p_pmh            text[] default '{}',
+  p_pack_years     numeric default 0,
+  p_quit_years     numeric default null,  -- null = never smoked
+  p_audit_c_score  integer default 0,
+  p_has_diabetes   boolean default false,
+  p_has_htn        boolean default false,
+  p_has_hbv        boolean default false,
+  p_family_hx_cvd  boolean default false,
+  p_severity       integer default 5,
+  p_duration_days  integer default 1,
+  p_worsening      boolean default false
+)
+returns table (
+  condition_id    uuid,
+  icd11_code      text,
+  name_th         text,
+  name_en         text,
+  category        text,
+  severity        text,
+  urgency_level   integer,
+  specialty_required text,
+  encyclopedia_slug  text,
+  total_score     numeric,
+  matched_count   integer,
+  confidence      text
+)
+language sql stable as $$
+  select
+    c.id,
+    c.icd11_code,
+    c.name_th,
+    c.name_en,
+    c.category,
+    c.severity,
+    c.urgency_level,
+    c.specialty_required,
+    c.encyclopedia_slug,
+    least(1.0, sum(
+      d.base_score
+      + case when p_age > 60               then d.modifier_age_over_60  else 0 end
+      + case when p_age > 50               then d.modifier_age_over_50  else 0 end
+      + case when p_sex = 'male'           then d.modifier_male         else 0 end
+      + case when p_sex = 'female'         then d.modifier_female       else 0 end
+      + case when p_pack_years >= 10 and (p_quit_years is null or p_quit_years < 5)
+                                           then d.modifier_smoker       else 0 end
+      + case when p_quit_years between 0 and 5
+                                           then d.modifier_ex_smoker_5y else 0 end
+      + case when p_audit_c_score >= 3     then d.modifier_heavy_alcohol else 0 end
+      + case when p_has_diabetes           then d.modifier_diabetes     else 0 end
+      + case when p_has_htn                then d.modifier_hypertension else 0 end
+      + case when p_has_hbv                then d.modifier_hbv          else 0 end
+      + case when p_family_hx_cvd          then d.modifier_family_hx    else 0 end
+      + case when p_duration_days > 28     then d.modifier_duration_chronic else 0 end
+      + case when p_duration_days < 2      then d.modifier_duration_acute   else 0 end
+      + case when p_severity >= 7          then d.modifier_severity_high    else 0 end
+      + case when p_worsening              then d.modifier_worsening        else 0 end
+    )) as total_score,
+    count(*)::integer as matched_count,
+    case
+      when sum(d.base_score) > 0.5 then 'high'
+      when sum(d.base_score) > 0.25 then 'moderate'
+      else 'low'
+    end as confidence
+  from public.differential_dx d
+  join public.conditions c on c.id = d.condition_id
+  where d.symptom_id = any(p_symptom_ids)
+  group by c.id, c.icd11_code, c.name_th, c.name_en, c.category,
+           c.severity, c.urgency_level, c.specialty_required, c.encyclopedia_slug
+  order by total_score desc, c.urgency_level desc
+  limit 6
+$$;
+
+
+-- ============================================================
+-- END supabase/migrations/002_clinical_schema.sql
+-- ============================================================
+
+
+-- ============================================================
+-- BEGIN supabase/seed/clinical_seed.sql
+-- ============================================================
+
 -- ============================================================
 -- Health Compass — Clinical Seed Data
 -- All content PENDING medical review before production use
@@ -661,3 +1658,8 @@ values
  '{"ranges":{"0-4":"วิตกกังวลน้อยมาก","5-9":"วิตกกังวลน้อย","10-14":"วิตกกังวลปานกลาง","15-21":"วิตกกังวลมาก"},"cutoff_for_gad":10}')
 
 on conflict (tool_key) do nothing;
+
+
+-- ============================================================
+-- END supabase/seed/clinical_seed.sql
+-- ============================================================

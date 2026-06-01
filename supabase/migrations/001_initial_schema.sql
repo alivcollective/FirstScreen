@@ -483,7 +483,7 @@ values
    'Lindström & Tuomilehto, Diabetes Care 2003 — adapted WHO Asia-Pacific BMI thresholds', '2.0', true),
   ('framingham-cvd-10year', 'Framingham 10-Year Cardiovascular Risk Score', 'cardiovascular',
    array['thai', 'asian', 'general'],
-   'D\'Agostino et al, Circulation 2008', '2.0', true),
+   'D''Agostino et al, Circulation 2008', '2.0', true),
   ('phq-9', 'Patient Health Questionnaire-9 (Depression)', 'mental_health',
    array['general', 'thai'],
    'Kroenke K et al, J Gen Intern Med 2001', '1.0', true),
