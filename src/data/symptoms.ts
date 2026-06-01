@@ -84,8 +84,67 @@ export const symptomsByRegion: Record<BodyRegion, Symptom[]> = {
     { id: 'swollen_lymph', label: 'ต่อมน้ำเหลืองโต', severity: 'high', region: 'general', relatedConditions: ['lymphoma', 'infection', 'leukemia'] },
     { id: 'fainting', label: 'เป็นลม หมดสติ', severity: 'critical', region: 'general', relatedConditions: ['heart-attack', 'stroke', 'hypoglycemia'] },
     { id: 'confusion', label: 'สับสน มึนงง', severity: 'critical', region: 'general', relatedConditions: ['stroke', 'meningitis', 'sepsis'] },
+    { id: 'frequent_urination', label: 'ปัสสาวะบ่อยผิดปกติ', severity: 'medium', region: 'general', relatedConditions: ['diabetes', 'kidney-disease', 'uti'] },
+    { id: 'excessive_thirst', label: 'กระหายน้ำมากผิดปกติ', severity: 'medium', region: 'general', relatedConditions: ['diabetes', 'kidney-disease'] },
+    { id: 'hair_loss', label: 'ผมร่วงผิดปกติ', severity: 'low', region: 'general', relatedConditions: ['thyroid', 'anemia', 'stress'] },
+    { id: 'itching_all_over', label: 'คันตามร่างกายโดยไม่มีผื่น', severity: 'medium', region: 'general', relatedConditions: ['liver-disease', 'kidney-disease', 'lymphoma'] },
+    { id: 'cold_intolerance', label: 'หนาวง่ายผิดปกติ', severity: 'low', region: 'general', relatedConditions: ['hypothyroid', 'anemia'] },
+    { id: 'heat_intolerance', label: 'ร้อนง่าย เหงื่อออกมาก', severity: 'medium', region: 'general', relatedConditions: ['hyperthyroid', 'menopause'] },
+    { id: 'tremor', label: 'มือสั่น ตัวสั่น', severity: 'medium', region: 'general', relatedConditions: ['hyperthyroid', 'parkinson', 'anxiety'] },
+    { id: 'bruising_easy', label: '멍ง่าย ห้ามเลือดยาก', severity: 'high', region: 'general', relatedConditions: ['leukemia', 'liver-disease', 'bleeding-disorder'] },
   ],
 }
+
+// ── Extended symptoms — added after initial object definition ────
+function _extendSymptoms(): void {
+  const head = symptomsByRegion.head
+  head.push(
+    { id: 'runny_nose', label: 'น้ำมูก คัดจมูก', severity: 'low', region: 'head', relatedConditions: ['flu', 'allergy', 'cold'] },
+    { id: 'toothache', label: 'ปวดฟัน ปวดกราม', severity: 'low', region: 'head', relatedConditions: ['dental', 'tmj'] },
+    { id: 'tongue_change', label: 'ลิ้นเปลี่ยนสี/มีแผล', severity: 'medium', region: 'head', relatedConditions: ['oral-cancer', 'vitamin-deficiency'] },
+    { id: 'difficulty_swallowing', label: 'กลืนลำบาก ติดขัด', severity: 'high', region: 'head', relatedConditions: ['esophageal-cancer', 'stroke', 'myasthenia'] },
+    { id: 'hoarse_voice', label: 'เสียงแหบผิดปกติ', severity: 'medium', region: 'head', relatedConditions: ['laryngeal-cancer', 'thyroid', 'gerd'] },
+  )
+
+  const chest = symptomsByRegion.chest
+  chest.push(
+    { id: 'breast_lump', label: 'คลำพบก้อนที่เต้านม', severity: 'high', region: 'chest', relatedConditions: ['breast-cancer'] },
+    { id: 'nipple_discharge', label: 'มีของเหลวออกจากหัวนม', severity: 'high', region: 'chest', relatedConditions: ['breast-cancer', 'prolactinoma'] },
+    { id: 'night_cough', label: 'ไอตอนกลางคืนมาก', severity: 'medium', region: 'chest', relatedConditions: ['asthma', 'gerd', 'heart-failure'] },
+    { id: 'hemoptysis_small', label: 'มีเลือดปนเสมหะ (เล็กน้อย)', severity: 'high', region: 'chest', relatedConditions: ['tb', 'lung-cancer', 'bronchiectasis'] },
+  )
+
+  const abdomen = symptomsByRegion.abdomen
+  abdomen.push(
+    { id: 'rectal_pain', label: 'ปวดทวารหนัก', severity: 'medium', region: 'abdomen', relatedConditions: ['hemorrhoids', 'anal-fissure', 'colorectal-cancer'] },
+    { id: 'change_stool', label: 'ลักษณะอุจจาระเปลี่ยน (บางลง/สีดำ)', severity: 'high', region: 'abdomen', relatedConditions: ['colorectal-cancer', 'upper-gi-bleed'] },
+    { id: 'mucus_stool', label: 'อุจจาระมีมูก', severity: 'medium', region: 'abdomen', relatedConditions: ['ibs', 'ibd', 'infection'] },
+    { id: 'upper_abdominal_pain', label: 'ปวดท้องส่วนบน หลังกินอาหาร', severity: 'medium', region: 'abdomen', relatedConditions: ['gastritis', 'gerd', 'peptic-ulcer'] },
+    { id: 'groin_lump', label: 'มีก้อนที่ขาหนีบ', severity: 'high', region: 'abdomen', relatedConditions: ['hernia', 'lymphoma', 'ovarian-cancer'] },
+  )
+
+  const leftLeg = symptomsByRegion['left-leg']
+  leftLeg.push(
+    { id: 'foot_ulcer_l', label: 'แผลที่เท้าซ้ายหายช้า', severity: 'high', region: 'left-leg', relatedConditions: ['diabetes', 'peripheral-artery'] },
+    { id: 'varicose_l', label: 'เส้นเลือดขอดขาซ้าย', severity: 'low', region: 'left-leg', relatedConditions: ['varicose', 'dvt'] },
+  )
+  const rightLeg = symptomsByRegion['right-leg']
+  rightLeg.push(
+    { id: 'foot_ulcer_r', label: 'แผลที่เท้าขวาหายช้า', severity: 'high', region: 'right-leg', relatedConditions: ['diabetes', 'peripheral-artery'] },
+    { id: 'varicose_r', label: 'เส้นเลือดขอดขาขวา', severity: 'low', region: 'right-leg', relatedConditions: ['varicose', 'dvt'] },
+    { id: 'cold_feet', label: 'เท้าเย็นผิดปกติ', severity: 'medium', region: 'right-leg', relatedConditions: ['peripheral-artery', 'diabetes', 'hypothyroid'] },
+  )
+
+  const skin = symptomsByRegion.skin
+  skin.push(
+    { id: 'acanthosis', label: 'ผิวคล้ำที่คอ รักแร้ (Acanthosis)', severity: 'medium', region: 'skin', relatedConditions: ['diabetes', 'insulin-resistance'] },
+    { id: 'spider_angioma', label: 'เส้นเลือดแมงมุมใต้ผิวหนัง', severity: 'medium', region: 'skin', relatedConditions: ['liver-disease', 'pregnancy'] },
+    { id: 'hair_loss_patch', label: 'ผมร่วงเป็นหย่อม', severity: 'medium', region: 'skin', relatedConditions: ['alopecia', 'thyroid', 'stress'] },
+    { id: 'nail_change', label: 'เล็บเปลี่ยนสี/รูปร่าง', severity: 'medium', region: 'skin', relatedConditions: ['fungal', 'psoriasis', 'anemia'] },
+    { id: 'chronic_wound', label: 'แผลเรื้อรังหายช้ากว่า 3 สัปดาห์', severity: 'high', region: 'skin', relatedConditions: ['skin-cancer', 'diabetes', 'vasculitis'] },
+  )
+}
+_extendSymptoms()
 
 // ── Helpers ──────────────────────────────────────────────────
 

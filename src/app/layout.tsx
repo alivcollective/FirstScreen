@@ -86,7 +86,7 @@ export const metadata: Metadata = {
     url: BASE_URL,
     images: [
       {
-        url: `${BASE_URL}/og-image.jpg`,
+        url: `${BASE_URL}/og?title=รู้ความเสี่ยง ก่อนโรครู้จักคุณ&subtitle=แพลตฟอร์มนำทางสุขภาพเชิงป้องกัน Thailand-first`,
         width: 1200,
         height: 630,
         alt: "Health Compass — แพลตฟอร์มนำทางสุขภาพเชิงป้องกัน",
@@ -98,7 +98,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Health Compass — รู้ความเสี่ยง ก่อนโรครู้จักคุณ",
     description: "แพลตฟอร์มนำทางสุขภาพเชิงป้องกัน ประเมินความเสี่ยง วางแผนตรวจคัดกรอง",
-    images: [`${BASE_URL}/og-image.jpg`],
+    images: [`${BASE_URL}/og?title=รู้ความเสี่ยง ก่อนโรครู้จักคุณ`],
   },
 
   verification: {
