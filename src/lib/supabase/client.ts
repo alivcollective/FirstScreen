@@ -1,0 +1,39 @@
+import { createBrowserClient } from '@supabase/ssr'
+import type { Database } from './types'
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
+
+export const isSupabaseConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY)
+
+/**
+ * Browser Supabase client (Client Components only).
+ * Returns null and logs a warning if env vars are not set —
+ * so the app continues to run on static data during development.
+ */
+export function createClient() {
+  if (!isSupabaseConfigured) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(
+        '[Health Compass] Supabase env vars not configured. ' +
+        'Running in STATIC mode. Set NEXT_PUBLIC_SUPABASE_URL and ' +
+        'NEXT_PUBLIC_SUPABASE_ANON_KEY to enable Supabase.'
+      )
+    }
+    return null
+  }
+  return createBrowserClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY)
+}
+
+/**
+ * Use this in Client Components when Supabase is required.
+ * Throws if Supabase is not configured (use only in SUPABASE mode paths).
+ */
+export function createClientOrThrow() {
+  if (!isSupabaseConfigured) {
+    throw new Error(
+      'Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.'
+    )
+  }
+  return createBrowserClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY)
+}

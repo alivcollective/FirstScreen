@@ -1,0 +1,28 @@
+# Health Compass — robots.txt
+# https://healthcompass.th
+
+User-agent: *
+Allow: /
+
+# Crawl delay for polite crawling
+Crawl-delay: 1
+
+# Block internal/admin paths
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /dashboard/private/
+
+# Allow important health content pages explicitly
+Allow: /diseases/
+Allow: /articles/
+Allow: /risk/
+Allow: /symptoms/
+Allow: /screening/
+
+# Sitemap location
+Sitemap: https://healthcompass.th/sitemap.xml
+
+# Note: This is a YMYL (health information) site.
+# Content is educational only. Not medical advice.
+# Emergency: Thailand EMS 1669

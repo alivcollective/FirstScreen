@@ -1,0 +1,760 @@
+{
+  "site": {
+    "name": "Health Compass",
+    "tagline": "Navigate Your Health Journey",
+    "description": "Your trusted guide to preventive healthcare. Understand your risks, plan your screenings, and navigate to the right care."
+  },
+  "common": {
+    "signIn": "Sign In",
+    "getStarted": "Get Started",
+    "continue": "Continue",
+    "back": "Back",
+    "calculate": "Calculate Risk",
+    "retake": "Retake Assessment",
+    "loadMore": "Load More Conditions",
+    "viewAll": "View all conditions in our Disease Library",
+    "explore": "Explore",
+    "active": "Active",
+    "comingSoon": "Coming Soon",
+    "new": "New",
+    "search": "Search conditions, symptoms, or ICD-10 codes...",
+    "overdue": "Overdue",
+    "scheduled": "Scheduled",
+    "notStarted": "Not Started",
+    "completed": "Completed",
+    "prevalence": "Prevalence",
+    "screeningStart": "Screening Start",
+    "grade": "Grade",
+    "source": "Source:",
+    "calculator": "Calculator:",
+    "frequency": "Frequency",
+    "cost": "Approx. Cost",
+    "recommendedFor": "Recommended for",
+    "availableIn": "Available in:",
+    "scheduleNow": "Schedule Now",
+    "findCenter": "Find Screening Center",
+    "learnTest": "Learn About This Test",
+    "markDone": "Mark as Done",
+    "completeProfile": "Complete Profile",
+    "takeAssessment": "Take Assessment",
+    "priority": {
+      "immediate": "immediate",
+      "soon": "soon",
+      "ongoing": "ongoing"
+    }
+  },
+  "nav": {
+    "symptoms": "Symptoms",
+    "screening": "Screening",
+    "risk": "Risk Assessment",
+    "diseases": "Diseases",
+    "providers": "Find Providers",
+    "academy": "Academy",
+    "searchPlaceholder": "Search conditions...",
+    "searchShortcut": "⌘K"
+  },
+  "hero2": {
+    "badge": "Evidence-Based · Free to Use",
+    "line1": "Know Your Risk",
+    "line2": "Before Disease Strikes",
+    "sub1": "3-Minute Risk Assessment",
+    "sub2": "Personalized Screening Plan",
+    "sub3": "Evidence-Based Guidance",
+    "primary": "Start Free Risk Assessment",
+    "ctaSymptoms": "Check My Symptoms",
+    "secondary": "View Common Conditions",
+    "trustLabel": "Guidelines from",
+    "trustSources": "WHO · MOPH Thailand · USPSTF · GRADE"
+  },
+  "howItWorks": {
+    "badge": "How It Works",
+    "title": "Simple. Fast. Evidence-Based.",
+    "step1Title": "Answer 3-Minute Questions",
+    "step1Desc": "About your age, lifestyle, and family history",
+    "step2Title": "Get Your Risk Score",
+    "step2Desc": "Validated medical calculators, graded evidence",
+    "step3Title": "Receive Your Screening Plan",
+    "step3Desc": "Personalized to your profile and Thailand's guidelines",
+    "startBtn": "Start Now — It's Free"
+  },
+  "riskCats": {
+    "badge": "Risk Assessment",
+    "title": "What Would You Like to Assess?",
+    "subtitle": "Evidence-based risk assessments for the conditions that matter most in Thailand.",
+    "cancer": {
+      "title": "Cancer",
+      "types": "Breast · Cervical · Colorectal · Liver",
+      "cta": "Assess Risk"
+    },
+    "heart": {
+      "title": "Heart Disease",
+      "types": "CVD · Hypertension · Stroke",
+      "cta": "Assess Risk"
+    },
+    "diabetes": {
+      "title": "Diabetes",
+      "types": "Type 2 · Pre-diabetes · Metabolic",
+      "cta": "Assess Risk"
+    },
+    "general": {
+      "title": "General Health",
+      "types": "Screening · Lifestyle · Prevention",
+      "cta": "Assess Risk"
+    },
+    "viewAll": "View Full Assessment Suite"
+  },
+  "trustCompact": {
+    "label": "Clinical Standards We Follow",
+    "who": "WHO",
+    "whoDesc": "Global health guidelines",
+    "uspstf": "USPSTF",
+    "uspstfDesc": "Preventive care recommendations",
+    "nccn": "NCCN",
+    "nccnDesc": "Cancer screening guidelines",
+    "grade": "GRADE",
+    "gradeDesc": "Evidence quality framework",
+    "disclaimer": "Health Compass provides educational health information only. Not a substitute for professional medical advice."
+  },
+  "finalCta2": {
+    "eyebrow": "Takes only 3 minutes",
+    "title": "Understand Your Health Risks Today",
+    "subtitle": "Free · No registration · PDPA compliant · Never sells your data",
+    "btn": "Start Free Assessment",
+    "secondary": "View Disease Library"
+  },
+  "howItWorks": {
+    "badge": "How It Works",
+    "title": "Simple. Fast. Evidence-Based.",
+    "step1Title": "Answer 3-Minute Questions",
+    "step1Desc": "About your age, lifestyle, and family history",
+    "step2Title": "Get Your Risk Score",
+    "step2Desc": "Validated medical calculators, graded evidence",
+    "step3Title": "Receive Your Screening Plan",
+    "step3Desc": "Personalized to your profile and Thailand's guidelines",
+    "startBtn": "Start Now — It's Free"
+  },
+  "riskCats": {
+    "badge": "Risk Assessment",
+    "title": "What Would You Like to Assess?",
+    "subtitle": "Evidence-based risk assessments for the conditions that matter most in Thailand.",
+    "cancer": {
+      "title": "Cancer",
+      "types": "Breast · Cervical · Colorectal · Liver",
+      "cta": "Assess Risk"
+    },
+    "heart": {
+      "title": "Heart Disease",
+      "types": "CVD · Hypertension · Stroke",
+      "cta": "Assess Risk"
+    },
+    "diabetes": {
+      "title": "Diabetes",
+      "types": "Type 2 · Pre-diabetes · Metabolic",
+      "cta": "Assess Risk"
+    },
+    "general": {
+      "title": "General Health",
+      "types": "Screening · Lifestyle · Prevention",
+      "cta": "Assess Risk"
+    },
+    "viewAll": "View Full Assessment Suite"
+  },
+  "trustCompact": {
+    "label": "Clinical Standards We Follow",
+    "who": "WHO",
+    "whoDesc": "World Health Organization guidelines",
+    "uspstf": "USPSTF",
+    "uspstfDesc": "Preventive care recommendations",
+    "nccn": "NCCN",
+    "nccnDesc": "Cancer screening guidelines",
+    "grade": "GRADE",
+    "gradeDesc": "Evidence quality framework",
+    "disclaimer": "Health Compass provides educational health information only. Not a substitute for professional medical advice."
+  },
+  "finalCta2": {
+    "eyebrow": "Takes only 3 minutes",
+    "title": "Understand Your Health Risks Today",
+    "subtitle": "Free · No registration · PDPA compliant · Never sells your data",
+    "btn": "Start Free Assessment",
+    "secondary": "View Disease Library"
+  },
+  "hero": {
+    "launching": "Launching in Thailand 2026",
+    "title": "Navigate Your",
+    "titleHighlight": "Health Journey",
+    "subtitle": "The world's most trusted preventive healthcare navigation platform. Understand your risks. Plan your screenings. Access the right care — powered by evidence-based medicine and designed for every person on Earth.",
+    "cta": "Start Your Health Assessment",
+    "ctaSecondary": "Explore Disease Library",
+    "stat1Value": "10,000+",
+    "stat1Label": "Conditions Covered",
+    "stat2Value": "100+",
+    "stat2Label": "Countries (Roadmap)",
+    "stat3Value": "Evidence",
+    "stat3Label": "Graded A-D (GRADE)",
+    "stat4Value": "70%",
+    "stat4Label": "Deaths Are Preventable",
+    "conditions": {
+      "diabetes": "Type 2 Diabetes",
+      "heart": "Heart Disease",
+      "cervical": "Cervical Cancer",
+      "hypertension": "Hypertension",
+      "breast": "Breast Cancer",
+      "colorectal": "Colorectal Cancer",
+      "mental": "Mental Health",
+      "liver": "Liver Disease"
+    }
+  },
+  "modules": {
+    "badge": "Complete Platform",
+    "title": "Your Complete Health Navigation Platform",
+    "subtitle": "Ten integrated modules, designed to work together. From risk awareness to care access — every step of your health journey, covered.",
+    "risk": {
+      "title": "Risk Assessment",
+      "desc": "Validated calculators for cardiovascular disease, diabetes, cancer, and mental health. Get your personalized 10-year risk with actionable steps.",
+      "tag1": "Cardiovascular",
+      "tag2": "Diabetes",
+      "tag3": "Cancer"
+    },
+    "screening": {
+      "title": "Screening Planner",
+      "desc": "Personalized screening schedules based on Thailand's national health guidelines. Know exactly what tests you need, when, and where.",
+      "tag1": "MOPH Guidelines",
+      "tag2": "Personalized"
+    },
+    "symptoms": {
+      "title": "Symptom Navigator",
+      "desc": "Educational guidance to understand your symptoms, know when to seek care, and what questions to ask. Never a diagnosis — always empowerment.",
+      "tag1": "Educational Only",
+      "tag2": "600+ Symptoms"
+    },
+    "providers": {
+      "title": "Find Providers",
+      "desc": "Locate verified hospitals, clinics, and screening centers near you. Quality ratings, insurance coverage, languages spoken.",
+      "tag1": "Verified",
+      "tag2": "JCI Accredited"
+    },
+    "diseases": {
+      "title": "Disease Library",
+      "desc": "10,000+ conditions covered with evidence-graded information. Every fact sourced, reviewed by medical professionals, and regularly updated.",
+      "tag1": "10K+ Conditions",
+      "tag2": "ICD-10"
+    },
+    "academy": {
+      "title": "Health Academy",
+      "desc": "Evidence-based health education courses, videos, and interactive learning. Earn certificates. Improve your health literacy.",
+      "tag1": "50+ Courses",
+      "tag2": "Certificates",
+      "tag3": "New"
+    },
+    "ai": {
+      "title": "AI Health Guide",
+      "desc": "Ask health questions and get evidence-based educational answers. Cites sources. Never diagnoses. Always routes to professional care when needed.",
+      "tag1": "Evidence-Based",
+      "tag2": "AI-Powered"
+    },
+    "population": {
+      "title": "Population Health",
+      "desc": "Anonymized population health insights for researchers, public health officials, and policymakers. Screening rates, risk prevalence, healthcare gaps.",
+      "tag1": "API Access",
+      "tag2": "Research"
+    }
+  },
+  "conditions": {
+    "badge": "Thailand Focus",
+    "title": "Thailand's Most Critical Health Conditions",
+    "subtitle": "71% of deaths in Thailand are caused by non-communicable diseases. Most are preventable or detectable early. Start here.",
+    "viewAll": "View all conditions in our Disease Library",
+    "prevalenceLabel": "Prevalence",
+    "screeningLabel": "Screening Start",
+    "learnMore": "Learn about {name}",
+    "items": {
+      "diabetes": {
+        "name": "Type 2 Diabetes",
+        "prevalence": "11% of adults",
+        "desc": "Thailand has one of the highest diabetes rates in Southeast Asia. Early detection through simple blood glucose testing can prevent serious complications.",
+        "screeningAge": "From age 35"
+      },
+      "hypertension": {
+        "name": "Hypertension",
+        "prevalence": "24% of adults",
+        "desc": "The \"silent killer\" — most people have no symptoms. Regular blood pressure monitoring is the most important preventive action.",
+        "screeningAge": "From age 18"
+      },
+      "cervical": {
+        "name": "Cervical Cancer",
+        "prevalence": "#2 cancer in Thai women",
+        "desc": "Nearly 100% preventable with HPV vaccination and Pap smear screening. Thailand's low screening rate (under 30%) creates a major prevention gap.",
+        "screeningAge": "Every 3-5 years from age 25"
+      },
+      "liver": {
+        "name": "Liver Cancer",
+        "prevalence": "#1 cancer in Thai men",
+        "desc": "Strongly linked to Hepatitis B and C (endemic in Thailand) and liver flukes from raw freshwater fish consumption.",
+        "screeningAge": "High-risk from age 40"
+      },
+      "cardiovascular": {
+        "name": "Cardiovascular Disease",
+        "prevalence": "Leading cause of death",
+        "desc": "Heart attack and stroke account for the most deaths in Thailand. 80% are preventable with early detection and lifestyle modification.",
+        "screeningAge": "Risk assessment from age 40"
+      },
+      "colorectal": {
+        "name": "Colorectal Cancer",
+        "prevalence": "Rising incidence",
+        "desc": "90% survival rate when caught early vs. 10% when caught late. Colonoscopy screening starting at age 50 is highly effective.",
+        "screeningAge": "From age 50 (earlier if family history)"
+      }
+    }
+  },
+  "trust": {
+    "badge": "Trust Framework",
+    "title": "Built on Medical Evidence. Reviewed by Experts.",
+    "subtitle": "In healthcare information, trust isn't optional — it's the product. Every architectural decision on Health Compass is designed around earning and maintaining that trust.",
+    "pillars": {
+      "evidence": {
+        "title": "Evidence-Based",
+        "detail": "GRADE Methodology",
+        "desc": "Every medical claim is graded using the GRADE methodology (A-D). Only systematic reviews, RCTs, and validated guidelines make it onto Health Compass."
+      },
+      "reviewed": {
+        "title": "Medically Reviewed",
+        "detail": "Licensed Physicians",
+        "desc": "All content is reviewed by licensed medical professionals — physicians, specialists, and public health experts — before publication."
+      },
+      "updated": {
+        "title": "Regularly Updated",
+        "detail": "90-Day Review Cycle",
+        "desc": "Clinical guidelines change. Our content refresh cycle ensures every piece of health information reflects the current standard of care."
+      },
+      "cited": {
+        "title": "Always Cited",
+        "detail": "Primary Sources Only",
+        "desc": "We show our work. Every claim links to its primary source — published guidelines, peer-reviewed studies, or authoritative health organization statements."
+      },
+      "privacy": {
+        "title": "Privacy by Design",
+        "detail": "PDPA + GDPR",
+        "desc": "PDPA and GDPR-compliant architecture. Your health data belongs to you. No selling. No sharing without explicit consent. Full data deletion on request."
+      },
+      "noDiagnosis": {
+        "title": "Never Diagnoses",
+        "detail": "Education Only",
+        "desc": "Health Compass is a navigation and education platform. We explicitly and persistently disclaim diagnostic intent. We connect you to care — we don't replace it."
+      }
+    },
+    "gradeTitle": "Evidence Grading System (GRADE)",
+    "grades": {
+      "a": { "label": "Strong", "desc": "Multiple high-quality RCTs or systematic reviews" },
+      "b": { "label": "Moderate", "desc": "Well-designed trials with consistent results" },
+      "c": { "label": "Limited", "desc": "Expert consensus or limited evidence" },
+      "d": { "label": "Expert Opinion", "desc": "Clinical experience and expert judgment" }
+    },
+    "partnersLabel": "Aligned with national & international health standards",
+    "partners": {
+      "moph": "Ministry of Public Health Thailand",
+      "nhso": "National Health Security Office",
+      "mahidol": "Mahidol University",
+      "heartFoundation": "Thai Heart Foundation",
+      "cancerInstitute": "National Cancer Institute Thailand",
+      "who": "WHO Southeast Asia"
+    },
+    "badges": {
+      "pdpa": "PDPA Compliant",
+      "evidence": "Evidence-Based",
+      "reviewed": "Medically Reviewed"
+    }
+  },
+  "riskPreview": {
+    "badge": "Risk Assessment Platform",
+    "title": "Know Your Risk Before Disease Knows You",
+    "subtitle": "Health Compass uses validated medical calculators to give you a clear picture of your personal health risks — not generic statistics, but your numbers, based on your profile.",
+    "cta": "Take Your Risk Assessment",
+    "assessments": {
+      "cvd": { "title": "Cardiovascular Risk", "subtitle": "Framingham 10-Year Risk", "time": "3 min" },
+      "diabetes": { "title": "Diabetes Risk", "subtitle": "FINDRISC — Asian Adapted", "time": "2 min" },
+      "cancer": { "title": "Cancer Risk Profile", "subtitle": "Multi-Cancer Screening", "time": "5 min" },
+      "mental": { "title": "Mental Health Check", "subtitle": "PHQ-9 + GAD-7", "time": "2 min" }
+    },
+    "sample": {
+      "label": "Sample Result — Educational Demo",
+      "name": "Diabetes Risk Example",
+      "scoreLabel": "Score",
+      "lowGauge": "Low Risk",
+      "highGauge": "Very High",
+      "risk10yr": "{value}% 10-Year Risk",
+      "actionsTitle": "Recommended Actions",
+      "disclaimer": "This is an educational example. Your real results depend on your personal health profile.",
+      "architectureBadge": "HIPAA-Inspired Architecture",
+      "interpretation": "Your diabetes risk score indicates a high probability of developing Type 2 Diabetes within 10 years. This warrants immediate action.",
+      "action1": "Schedule Fasting Blood Glucose Test",
+      "action2": "Discuss with your doctor",
+      "action3": "Start 30-min daily exercise routine",
+      "action4": "Reduce refined carbohydrates"
+    }
+  },
+  "globalExpansion": {
+    "badge": "Global Roadmap",
+    "title": "Built for Thailand. Designed for the World.",
+    "subtitle": "Every architecture decision supports 100+ languages, 100+ countries, and 1 billion users. We start local. We think global.",
+    "phases": {
+      "1": {
+        "label": "Phase 1",
+        "title": "Thailand",
+        "timeline": "2026",
+        "population": "71M",
+        "h1": "MOPH Partnership",
+        "h2": "Universal Coverage Integration",
+        "h3": "Thai NCD Focus",
+        "status": "Active"
+      },
+      "2": {
+        "label": "Phase 2",
+        "title": "Southeast Asia",
+        "timeline": "2027",
+        "population": "680M",
+        "h1": "ASEAN Health Framework",
+        "h2": "Multi-language",
+        "h3": "Cross-border data"
+      },
+      "3": {
+        "label": "Phase 3",
+        "title": "Asia Pacific",
+        "timeline": "2028-2029",
+        "population": "4.7B",
+        "h1": "WHO WPRO Partnership",
+        "h2": "AI at scale",
+        "h3": "100M+ users"
+      },
+      "4": {
+        "label": "Phase 4",
+        "title": "Global",
+        "timeline": "2030+",
+        "population": "8B",
+        "h1": "100+ countries",
+        "h2": "100+ languages",
+        "h3": "1 billion users",
+        "h4": "WHO Partnership"
+      }
+    },
+    "scaleTitle": "Global Scale Requirements",
+    "metrics": {
+      "languages": "Languages",
+      "countries": "Countries",
+      "users": "Users (10yr)",
+      "concurrent": "Concurrent",
+      "uptime": "Uptime SLA",
+      "api": "API Response"
+    },
+    "infra": {
+      "multiRegion": "Multi-Region Deployment",
+      "multiRegionDesc": "Supabase + Vercel Edge Network across AP, EU, US regions",
+      "localization": "Healthcare Localization",
+      "localizationDesc": "Country-specific guidelines, insurance systems, care pathways",
+      "privacy": "Privacy by Design",
+      "privacyDesc": "PDPA, GDPR, HIPAA-inspired. Data residency per country"
+    }
+  },
+  "cta": {
+    "title": "Your Health Journey Starts Today",
+    "subtitle": "Don't wait for symptoms to tell you something is wrong. Take control of your preventive healthcare now. It takes less than 5 minutes to understand your risk.",
+    "primary": "Start Free Risk Assessment",
+    "secondary": "View Screening Planner",
+    "footnote": "Free forever · No credit card · PDPA compliant · Never sells your data"
+  },
+  "footer": {
+    "disclaimerLabel": "Medical Disclaimer:",
+    "disclaimerText": "Health Compass provides health education and navigation information only. This is not medical advice and does not replace consultation with a qualified healthcare professional. Always seek physician advice for medical conditions.",
+    "mission": "Our mission is to eliminate preventable suffering through better health navigation. Evidence-based. Globally scalable. Locally relevant.",
+    "pdpa": "PDPA Compliant",
+    "evidenceBased": "Evidence-Based",
+    "medReviewed": "Medically Reviewed",
+    "sections": {
+      "platform": "Platform",
+      "company": "Company",
+      "legal": "Legal"
+    },
+    "links": {
+      "diseaseLibrary": "Disease Library",
+      "screeningPlanner": "Screening Planner",
+      "riskAssessment": "Risk Assessment",
+      "symptomNavigator": "Symptom Navigator",
+      "findProviders": "Find Providers",
+      "healthAcademy": "Health Academy",
+      "aboutUs": "About Us",
+      "ourMission": "Our Mission",
+      "advisoryBoard": "Medical Advisory Board",
+      "careers": "Careers",
+      "press": "Press",
+      "partnerWithUs": "Partner With Us",
+      "privacyPolicy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "medDisclaimer": "Medical Disclaimer",
+      "cookiePolicy": "Cookie Policy",
+      "pdpaCompliance": "PDPA Compliance"
+    },
+    "copyright": "© 2026 Health Compass. All rights reserved. Thailand · Southeast Asia · Global.",
+    "availableIn": "Available in:"
+  },
+  "disclaimer": {
+    "short": "Educational information only — not medical advice",
+    "full": "Health Compass provides health education and navigation information only. This is not medical advice and should not replace consultation with a qualified healthcare professional. Always seek the advice of your physician for any medical conditions.",
+    "educationalOnly": "Educational Information Only",
+    "educationalDesc": "These risk assessments are educational tools based on validated medical calculators. They are not medical diagnoses. Results should always be discussed with a qualified healthcare professional."
+  },
+  "diseases": {
+    "badge": "Disease Intelligence Network",
+    "title": "Disease Library",
+    "subtitle": "Evidence-graded health information on 500+ conditions. Every fact sourced, medically reviewed, and regularly updated.",
+    "searchPlaceholder": "Search conditions, symptoms, or ICD-10 codes...",
+    "categories": {
+      "all": "All Conditions",
+      "cardiovascular": "Cardiovascular",
+      "cancer": "Cancer",
+      "endocrine": "Diabetes & Hormones",
+      "mental": "Mental Health",
+      "infectious": "Infectious Disease",
+      "respiratory": "Respiratory",
+      "musculoskeletal": "Bone & Joint"
+    },
+    "evidenceTitle": "Evidence Quality Grades (GRADE Methodology)",
+    "sectionTitle": "Thailand Priority Conditions",
+    "sectionSubtitle": "High-burden conditions for the Thai population, based on MOPH data",
+    "loadMore": "Load More Conditions",
+    "riskLevel": "{level} risk",
+    "screeningLabel": "Screening:",
+    "items": {
+      "diabetes": {
+        "name": "Type 2 Diabetes",
+        "category": "Endocrine",
+        "prevalence": "Very Common",
+        "desc": "A chronic condition affecting how the body processes blood sugar (glucose). 40% of cases are undiagnosed.",
+        "keyFact": "90% preventable with lifestyle changes",
+        "screeningAge": "From age 35"
+      },
+      "hypertension": {
+        "name": "Hypertension",
+        "category": "Cardiovascular",
+        "prevalence": "Very Common",
+        "desc": "High blood pressure — the most common and preventable cardiovascular risk factor globally.",
+        "keyFact": "Often has no symptoms until serious damage occurs",
+        "screeningAge": "From age 18"
+      },
+      "cervical": {
+        "name": "Cervical Cancer",
+        "category": "Oncology",
+        "prevalence": "Common",
+        "desc": "Cancer of the cervix, strongly linked to HPV infection. Nearly 100% preventable with vaccination and screening.",
+        "keyFact": "Pap smear screening reduces mortality by 80%",
+        "screeningAge": "Every 3-5 years from age 25"
+      },
+      "liver": {
+        "name": "Liver Cancer",
+        "category": "Oncology",
+        "prevalence": "Common in Thailand",
+        "desc": "The most common cancer in Thai men, strongly linked to Hepatitis B/C infection and liver flukes.",
+        "keyFact": "HBV vaccination prevents most cases",
+        "screeningAge": "High-risk from age 40"
+      },
+      "colorectal": {
+        "name": "Colorectal Cancer",
+        "category": "Oncology",
+        "prevalence": "Common",
+        "desc": "Cancer of the colon or rectum. 90% survival rate when caught early via colonoscopy screening.",
+        "keyFact": "Stage I survival: 90% vs Stage IV: 10%",
+        "screeningAge": "From age 50"
+      },
+      "depression": {
+        "name": "Depression",
+        "category": "Mental Health",
+        "prevalence": "Very Common",
+        "desc": "A common and serious mood disorder affecting 1 in 7 Thais. Highly treatable with proper support.",
+        "keyFact": "1 in 7 Thais experience depression",
+        "screeningAge": "Any age"
+      }
+    }
+  },
+  "riskPage": {
+    "badge": "Risk Assessment Platform",
+    "title": "Understand Your Health Risks",
+    "subtitle": "Validated medical calculators that give you a clear, personalized picture of your health risks — with actionable next steps, not just numbers.",
+    "modules": {
+      "cvd": {
+        "title": "Cardiovascular Risk",
+        "subtitle": "Framingham 10-Year CVD Risk",
+        "desc": "Calculate your 10-year risk of heart attack or stroke. Includes blood pressure, cholesterol, smoking, and diabetes factors.",
+        "time": "3-4 min"
+      },
+      "diabetes": {
+        "title": "Diabetes Risk",
+        "subtitle": "FINDRISC — Asian Adapted",
+        "desc": "Assess your Type 2 Diabetes risk using the internationally validated FINDRISC score, adapted for Thai and Asian populations.",
+        "time": "2 min"
+      },
+      "cancer": {
+        "title": "Cancer Risk Profile",
+        "subtitle": "Multi-Cancer Screening Tool",
+        "desc": "Personalized cancer risk profile covering breast, colorectal, cervical, and prostate cancer based on validated screening guidelines.",
+        "time": "5 min"
+      },
+      "mental": {
+        "title": "Mental Health Check",
+        "subtitle": "PHQ-9 + GAD-7",
+        "desc": "Validated screening instruments for depression (PHQ-9) and anxiety (GAD-7) symptoms. Always routes to professional support.",
+        "time": "3 min"
+      }
+    },
+    "diabetesSectionTitle": "Diabetes Risk Assessment",
+    "diabetesSectionSubtitle": "Complete the assessment below to get your personalized diabetes risk score.",
+    "aboutTitle": "About This Calculator",
+    "aboutDesc1": "FINDRISC (Finnish Diabetes Risk Score) is one of the most widely validated diabetes risk tools globally, developed by the Finnish Diabetes Association.",
+    "aboutDesc2": "This version has been adapted for Asian populations using WHO Asia-Pacific BMI thresholds (overweight ≥23, obese ≥27.5) which better reflect metabolic risk in Thai and Southeast Asian populations.",
+    "validationTitle": "Validation Studies",
+    "validationRef1": "• Lindström J, Tuomilehto J. Diabetes Care. 2003",
+    "validationRef2": "• WHO Expert Consultation on BMI cutoffs for Asian populations. 2004",
+    "validationRef3": "• Aekplakorn W, et al. Diabetes Research Thailand. 2006",
+    "takeAssessment": "Take Assessment"
+  },
+  "screening": {
+    "badge": "Preventive Screening Planner",
+    "title": "Your Personalized Screening Plan",
+    "subtitle": "Based on Thailand's national health guidelines. Know exactly what screenings you need, when to get them, and where to go.",
+    "guidelineSource": "Guideline Source",
+    "guidelineValue": "MOPH + NHSO Thailand 2025",
+    "profileLabel": "Profile Based On",
+    "profileValue": "Guest Profile · Bangkok",
+    "personalizedTitle": "Get Your Personalized Plan",
+    "personalizedDesc": "Complete your health profile to get a screening schedule tailored to your age, sex, family history, and risk factors.",
+    "completeProfile": "Complete Profile",
+    "overdueLabel": "Overdue",
+    "notStartedLabel": "Not Started",
+    "onScheduleLabel": "On Schedule",
+    "recommendedFor": "Recommended for",
+    "frequency": "Frequency",
+    "cost": "Approx. Cost",
+    "findCenter": "Find Screening Center",
+    "learnTest": "Learn About This Test",
+    "markDone": "Mark as Done",
+    "guidelineNoteTitle": "Based on Thailand National Health Guidelines",
+    "guidelineNoteText": "Screening recommendations are based on the Thailand Ministry of Public Health (MOPH) guidelines, National Health Security Office (NHSO) Preventive Care Package, and Royal College of Physicians guidelines. Guidelines are reviewed annually and this planner is updated accordingly.",
+    "items": {
+      "bloodGlucose": {
+        "name": "Fasting Blood Glucose",
+        "category": "Diabetes",
+        "condition": "Type 2 Diabetes",
+        "for": "Adults 35+, or overweight adults 25+",
+        "frequency": "Every 3 years if normal; annually if pre-diabetic",
+        "guideline": "MOPH Thailand · NHSO Preventive Care Package 2025",
+        "cost": "฿150–500",
+        "where": "Any hospital or clinic"
+      },
+      "bloodPressure": {
+        "name": "Blood Pressure Screening",
+        "category": "Cardiovascular",
+        "condition": "Hypertension",
+        "for": "All adults from age 18",
+        "frequency": "Every 2 years if normal; more frequently if elevated",
+        "guideline": "Thai Hypertension Society 2023",
+        "cost": "฿0–50 (free at NHSO facilities)",
+        "where": "All health facilities"
+      },
+      "papSmear": {
+        "name": "Pap Smear (Cervical Cancer)",
+        "category": "Cancer Screening",
+        "condition": "Cervical Cancer",
+        "for": "Women aged 25–65 who are or have been sexually active",
+        "frequency": "Every 3 years (Pap smear) or 5 years (HPV co-test)",
+        "guideline": "National Cancer Institute Thailand · MOPH 2024",
+        "cost": "฿300–1,500",
+        "where": "OB/GYN clinic, women's health center"
+      },
+      "cholesterol": {
+        "name": "Cholesterol Panel (Lipid Profile)",
+        "category": "Cardiovascular",
+        "condition": "Cardiovascular Disease",
+        "for": "Adults 35+ (men), 45+ (women), or younger with risk factors",
+        "frequency": "Every 5 years if normal; annually if elevated",
+        "guideline": "Thai Cardiovascular Society 2023",
+        "cost": "฿200–800",
+        "where": "Hospital laboratory"
+      }
+    },
+    "status": {
+      "overdue": "Overdue",
+      "scheduled": "Scheduled",
+      "notStarted": "Not Started",
+      "completed": "Completed"
+    },
+    "daysOverdue": "· {days}d",
+    "daysUntil": "· {days}d"
+  },
+  "calculator": {
+    "diabetes": {
+      "title": "Diabetes Risk Assessment",
+      "subtitle": "FINDRISC Score (Asian Population Adapted) · ~2 minutes",
+      "step1Title": "Your Profile",
+      "step2Title": "Lifestyle & Family History",
+      "birthYear": "Year of Birth",
+      "birthYearPlaceholder": "e.g. 1980",
+      "biologicalSex": "Biological Sex",
+      "male": "Male",
+      "female": "Female",
+      "heightCm": "Height (cm)",
+      "heightPlaceholder": "e.g. 165",
+      "weightKg": "Weight (kg)",
+      "weightPlaceholder": "e.g. 70",
+      "bmiDisplay": "BMI: {bmi} — {category}",
+      "exerciseDays": "Exercise Days per Week",
+      "exerciseDaysHelper": "Days with at least 30 minutes of moderate physical activity",
+      "smokingQuestion": "Do you currently smoke?",
+      "noSmoking": "No, I don't smoke",
+      "yesSmoking": "Yes, I smoke",
+      "familyHistoryLabel": "Family History of Diabetes",
+      "familyHistoryHelper": "Parent, sibling, or grandparent with Type 2 Diabetes",
+      "noFamilyHistory": "No family history",
+      "yesFamilyHistory": "Yes, family history",
+      "continueBtn": "Continue",
+      "backBtn": "Back",
+      "calculateBtn": "Calculate Risk",
+      "retakeBtn": "Retake Assessment",
+      "findCenterBtn": "Find a Diabetes Screening Center",
+      "disclaimer": "This assessment is for educational purposes only. Results are not a medical diagnosis. Always consult a qualified healthcare professional.",
+      "resultDisclaimer": "This result is for educational purposes only and is not a medical diagnosis. Please consult a qualified healthcare provider to confirm your risk and discuss next steps.",
+      "resultTitle": "Your Diabetes Risk Score",
+      "scoreLabel": "/ 26 points",
+      "lowGauge": "Low Risk",
+      "highGauge": "Very High Risk",
+      "actionsTitle": "Recommended Actions",
+      "calculatorLabel": "Calculator:",
+      "sourceLabel": "Source:",
+      "sourceValue": "International Diabetes Federation, adapted for Asian populations",
+      "labels": {
+        "low": "Low Risk",
+        "moderate": "Slightly Elevated Risk",
+        "high": "High Risk",
+        "veryHigh": "Very High Risk"
+      },
+      "interpretation": {
+        "low": "Your current risk for developing Type 2 Diabetes is low. Maintaining your current healthy habits is the best protection.",
+        "moderate": "Your risk for Type 2 Diabetes is slightly elevated. Lifestyle improvements can significantly reduce this risk.",
+        "high": "You have a moderate risk of developing Type 2 Diabetes. A fasting blood glucose test is recommended.",
+        "veryHigh": "You have a very high risk. There is a strong chance you may already have undiagnosed Type 2 Diabetes or pre-diabetes. Please seek medical evaluation promptly."
+      },
+      "actions": {
+        "bloodTestTitle": "Schedule Fasting Blood Glucose Test",
+        "bloodTestDesc": "A simple blood test can detect pre-diabetes or diabetes. Available at most hospitals and clinics.",
+        "exerciseTitle": "Increase Physical Activity",
+        "exerciseDesc": "Aim for 150 minutes of moderate exercise per week. Even 30-minute daily walks significantly reduce diabetes risk.",
+        "dietTitle": "Reduce Sugar and Refined Carbohydrates",
+        "dietDesc": "Replace white rice with brown rice or vegetables. Limit sugary drinks, including fruit juices.",
+        "weightTitle": "Discuss Weight Management with Your Doctor",
+        "weightDesc": "Even a 5-7% weight reduction can cut diabetes risk by up to 58%."
+      },
+      "bmi": {
+        "underweight": "Underweight",
+        "normal": "Normal weight (Asian)",
+        "overweight": "Overweight (Asian)",
+        "obese": "Obese (Asian)"
+      }
+    }
+  }
+}
