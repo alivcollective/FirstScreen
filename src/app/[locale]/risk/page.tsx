@@ -19,7 +19,7 @@ const riskModules = [
     id: 'cardiovascular',
     icon: Heart,
     titleTh: 'ความเสี่ยงหัวใจและหลอดเลือด',
-    subtitleTh: 'Framingham 10-Year CVD Risk',
+    subtitleTh: 'Framingham — ความเสี่ยงหัวใจ 10 ปี',
     descTh: 'คำนวณความเสี่ยง 10 ปีของหัวใจวายหรือโรคหลอดเลือดสมอง',
     time: '3-4 นาที',
     color: 'text-red-600', bg: 'bg-red-50', anchor: '#cvd', available: true,

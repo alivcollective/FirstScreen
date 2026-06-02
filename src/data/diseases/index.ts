@@ -6,12 +6,20 @@ import { toCard } from '@/types/disease'
 import breastCancer from './breast-cancer'
 import type2Diabetes from './type-2-diabetes'
 import hypertension from './hypertension'
+import heartDisease from './heart-disease'
+import stroke from './stroke'
+import lungCancer from './lung-cancer'
+import colorectalCancer from './colorectal-cancer'
 
 // All rich diseases indexed by slug
 export const RICH_DISEASES: Record<string, RichDisease> = {
   'breast-cancer': breastCancer,
   'type-2-diabetes': type2Diabetes,
   'hypertension': hypertension,
+  'heart-disease': heartDisease,
+  'stroke': stroke,
+  'lung-cancer': lungCancer,
+  'colorectal-cancer': colorectalCancer,
 }
 
 export function getRichDisease(slug: string): RichDisease | null {

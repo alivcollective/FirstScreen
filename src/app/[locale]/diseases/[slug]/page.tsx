@@ -23,6 +23,9 @@ import { RiskFactorsSection } from '@/components/disease/risk-factors-section'
 import { ScreeningSection } from '@/components/disease/screening-section'
 import { TreatmentSection } from '@/components/disease/treatment-section'
 import { PreventionSection } from '@/components/disease/prevention-section'
+import { MedicalReview } from '@/components/shared/medical-review'
+import { RelatedContent } from '@/components/shared/related-content'
+import { Newsletter } from '@/components/shared/newsletter'
 
 // SEO / JSON-LD
 import {
@@ -278,21 +281,19 @@ async function RichDiseasePage({ params }: Props) {
                   <SidebarCTAs slug={slug} />
                 </div>
 
-                {/* Related diseases */}
-                {disease.relatedDiseases.length > 0 && (
-                  <div className="rounded-2xl border border-slate-200 bg-white p-4">
-                    <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">โรคที่เกี่ยวข้อง</p>
-                    <div className="space-y-2">
-                      {disease.relatedDiseases.map(rSlug => (
-                        <Link key={rSlug} href={`/diseases/${rSlug}`}
-                          className="flex items-center gap-2 text-sm text-teal-600 hover:text-teal-700 transition-colors">
-                          <ChevronRight className="h-3.5 w-3.5" />
-                          {rSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                {/* Related content — smart internal linking */}
+                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                  <RelatedContent diseaseSlug={slug} />
+                </div>
+
+                {/* Trust badge */}
+                <MedicalReview
+                  reviewedBy={disease.reviewedBy}
+                  reviewDate={disease.lastReviewed}
+                  isPending={disease.reviewedBy?.includes('รอ')}
+                  referenceCount={disease.references?.length}
+                  compact
+                />
               </div>
             </aside>
 
@@ -416,6 +417,9 @@ async function RichDiseasePage({ params }: Props) {
                   ค้นหาโรงพยาบาล
                 </ButtonLink>
               </div>
+
+              {/* Newsletter */}
+              <Newsletter />
             </div>
           </div>
         </div>

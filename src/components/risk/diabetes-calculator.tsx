@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { calculateDiabetesRisk } from '@/lib/risk-calculators'
+import { assessWaistRisk } from '@/lib/clinical/calculators/bmi'
 import { RISK_COLORS } from '@/lib/constants'
 import type { RiskCategory, BiologicalSex } from '@/types'
 
@@ -18,6 +19,7 @@ const schema = z.object({
   biologicalSex: z.enum(['male', 'female', 'intersex', 'prefer_not_to_say']),
   heightCm: z.number().min(100).max(250),
   weightKg: z.number().min(30).max(300),
+  waistCm: z.number().min(40).max(200).optional(),
   isSmoker: z.boolean(),
   exerciseDaysPerWeek: z.number().min(0).max(7),
   hasDiabetesFamilyHistory: z.boolean(),
@@ -29,6 +31,7 @@ interface CalcResult {
   score: number
   riskPercentage?: number
   bmi: number
+  waistAtRisk?: boolean
 }
 
 function getBMICategory(bmi: number, t: ReturnType<typeof useTranslations>): string {
@@ -114,7 +117,11 @@ export function DiabetesCalculator() {
     const calculatedBmi = data.heightCm && data.weightKg
       ? Math.round((data.weightKg / Math.pow(data.heightCm / 100, 2)) * 10) / 10
       : 22
-    setResult({ riskCategory: calcResult.riskCategory, score: calcResult.score ?? 0, riskPercentage: calcResult.riskPercentage, bmi: calculatedBmi })
+    const sex = data.biologicalSex === 'female' ? 'female' : 'male'
+    const waistAtRisk = data.waistCm
+      ? assessWaistRisk(data.waistCm, sex).isAtRisk
+      : undefined
+    setResult({ riskCategory: calcResult.riskCategory, score: calcResult.score ?? 0, riskPercentage: calcResult.riskPercentage, bmi: calculatedBmi, waistAtRisk })
     setStep(3)
   }
 
@@ -220,6 +227,23 @@ export function DiabetesCalculator() {
                     {...register('weightKg', { valueAsNumber: true })}
                   />
                 </div>
+              </div>
+
+              {/* Waist Circumference */}
+              <div>
+                <Label htmlFor="waistCm" className="text-sm font-medium text-slate-700">
+                  รอบเอว (ซม.) <span className="text-slate-400 font-normal">— ไม่บังคับ</span>
+                </Label>
+                <input
+                  type="number"
+                  id="waistCm"
+                  placeholder="เช่น 88"
+                  className="mt-1.5 w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  {...register('waistCm', { valueAsNumber: true })}
+                />
+                <p className="mt-1 text-xs text-slate-500">
+                  เกณฑ์ไทย: ชาย &gt;90 ซม. หญิง &gt;80 ซม. — เพิ่มความแม่นยำ FINDRISC
+                </p>
               </div>
 
               {/* BMI Display */}
@@ -385,6 +409,18 @@ export function DiabetesCalculator() {
               </div>
             )}
           </div>
+
+          {/* Waist Risk Flag */}
+          {result.waistAtRisk !== undefined && (
+            <div className={`mb-4 rounded-lg border px-3 py-2 text-xs font-medium flex items-center gap-2
+              ${result.waistAtRisk
+                ? 'bg-amber-50 border-amber-200 text-amber-700'
+                : 'bg-emerald-50 border-emerald-200 text-emerald-700'}`}>
+              {result.waistAtRisk
+                ? '⚠️ รอบเอวเกินเกณฑ์ไทย — เพิ่มความเสี่ยงเบาหวานและกลุ่มอาการเมตาบอลิก'
+                : '✓ รอบเอวอยู่ในเกณฑ์ปกติ'}
+            </div>
+          )}
 
           {/* Interpretation */}
           <p className="text-sm text-slate-700 leading-relaxed mb-6">{interpretation}</p>

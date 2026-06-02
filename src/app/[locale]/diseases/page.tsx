@@ -7,7 +7,7 @@ import { DiseaseSearch } from '@/components/disease/disease-search'
 import { getAllDiseaseCardsForListing } from '@/data/diseases/index'
 
 export const metadata: Metadata = {
-  title: 'คลังข้อมูลโรค — Disease Library | Health Compass',
+  title: 'คลังข้อมูลโรค | FirstScreen',
   description: 'ข้อมูลโรคครบถ้วนสำหรับประชาชนไทย อ้างอิงหลักฐานทางการแพทย์ ตรวจสอบโดยแพทย์ผู้เชี่ยวชาญ',
 }
 
@@ -30,7 +30,7 @@ export default function DiseasesPage() {
                 <BookOpen className="h-5 w-5 text-teal-400" />
               </div>
               <Badge className="bg-teal-500/10 text-teal-300 border-teal-500/20">
-                Disease Intelligence Network
+                คลังข้อมูลโรค
               </Badge>
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
