@@ -239,7 +239,7 @@ export function ClinicalResults({
       {/* Error fallback */}
       {result.error && (
         <div className="rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-xs text-amber-400">
-          ⚠️ ไม่สามารถโหลดข้อมูลจาก Supabase ได้ครบถ้วน — แสดงผลบางส่วน
+          ไม่สามารถโหลดข้อมูลจาก Supabase ได้ครบถ้วน — แสดงผลบางส่วน
         </div>
       )}
 

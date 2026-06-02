@@ -101,7 +101,7 @@ function RiskCard({ assessment }: { assessment: StoredAssessment }) {
           assessment.urgencyLevel >= 2 ? 'bg-amber-100 text-amber-700' :
           'bg-emerald-100 text-emerald-700'
         )}>
-          ระดับเร่งด่วน: {['', 'นัดพบแพทย์', 'พบแพทย์เร็วๆ นี้', 'พบแพทย์ด่วน', '🔴 ฉุกเฉิน'][assessment.urgencyLevel]}
+          ระดับเร่งด่วน: {['', 'นัดพบแพทย์', 'พบแพทย์เร็วๆ นี้', 'พบแพทย์ด่วน', 'ฉุกเฉิน'][assessment.urgencyLevel]}
         </div>
       )}
     </div>
@@ -128,7 +128,7 @@ function ScreeningTimeline({ items }: { items: ScreeningDue[] }) {
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-slate-800 truncate">{item.name}</p>
             <p className={cn('text-xs', item.overdue ? 'text-red-500 font-medium' : 'text-slate-400')}>
-              {item.overdue ? '⚠️ ครบกำหนดแล้ว — ' : 'ถัดไป: '}{item.dueDate}
+              {item.overdue ? '! ครบกำหนดแล้ว — ' : 'ถัดไป: '}{item.dueDate}
             </p>
           </div>
           <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-teal-500 transition-colors" />

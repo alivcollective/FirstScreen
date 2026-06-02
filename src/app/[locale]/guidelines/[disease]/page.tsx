@@ -143,7 +143,7 @@ export default async function GuidelineDiseasePage({ params }: Props) {
                     'rounded-full border px-2.5 py-1 text-xs font-bold',
                     isThai ? 'bg-teal-900/50 border-teal-500/50 text-teal-300' : meta.color
                   )}>
-                    {isThai ? '🇹🇭 ' : ''}{meta.badge}
+                    {meta.badge}
                   </span>
                 )
               })}

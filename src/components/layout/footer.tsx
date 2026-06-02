@@ -43,8 +43,8 @@ export async function Footer() {
         <div className="mt-6 pt-5 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs text-slate-600">© 2026 FirstScreen · Thailand</p>
           <div className="flex gap-1">
-            {['🇹🇭', '🇬🇧', '🇨🇳', '🇯🇵', '🇰🇷'].map((flag, i) => (
-              <span key={i} className="text-sm opacity-60">{flag}</span>
+            {['TH', 'EN', 'CN', 'JP', 'KR'].map((code) => (
+              <span key={code} className="text-[10px] font-mono text-slate-600">{code}</span>
             ))}
           </div>
         </div>

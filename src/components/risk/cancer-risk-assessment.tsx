@@ -129,7 +129,7 @@ const CANCER_INFO: Record<CancerType, {
   source: string
 }> = {
   breast: {
-    nameTh: 'มะเร็งเต้านม', nameEn: 'Breast Cancer', icon: '🎗️', slug: 'breast-cancer',
+    nameTh: 'มะเร็งเต้านม', nameEn: 'Breast Cancer', icon: 'ribbon', slug: 'breast-cancer',
     screening: { test: 'Mammogram', frequency: 'ทุก 1–2 ปี', forWho: 'ผู้หญิงอายุ 40 ปีขึ้นไป' },
     source: 'NCCN Breast Cancer Screening Guidelines',
   },

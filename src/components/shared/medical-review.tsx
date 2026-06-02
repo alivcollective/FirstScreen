@@ -80,7 +80,7 @@ export function MedicalReview({
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
             <span className="text-xs font-semibold text-slate-700">
-              {isActuallyPending ? 'ตรวจสอบทางการแพทย์' : '✓ ตรวจสอบแล้ว'}
+              {isActuallyPending ? 'ตรวจสอบทางการแพทย์' : 'ตรวจสอบแล้ว'}
             </span>
             <span className={cn('rounded-full border px-2 py-0.5 text-[10px] font-bold', ev.bg, ev.color)}>
               {ev.label}
@@ -106,7 +106,7 @@ export function MedicalReview({
 
           {isActuallyPending && (
             <p className="mt-2 text-[11px] leading-relaxed text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-2.5 py-1.5">
-              ⚠️ เนื้อหานี้อยู่ระหว่างการตรวจสอบโดยแพทย์ผู้เชี่ยวชาญ — ใช้เพื่อการศึกษาเท่านั้น
+              เนื้อหานี้อยู่ระหว่างการตรวจสอบโดยแพทย์ผู้เชี่ยวชาญ — ใช้เพื่อการศึกษาเท่านั้น
             </p>
           )}
         </div>

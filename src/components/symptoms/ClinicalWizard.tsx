@@ -352,7 +352,7 @@ function Step2({ state, dispatch, onNext }: {
                           : 'bg-sky-500/20 border-sky-500 text-sky-300'
                         : 'bg-slate-700/40 border-slate-600 text-slate-300 hover:border-sky-500/50'}
                       ${s.is_emergency ? 'ring-1 ring-red-500/30' : ''}`}>
-                    {s.is_emergency && '⚠️ '}{s.name_th}
+                    {s.name_th}
                   </button>
                 )
               })}
@@ -746,7 +746,7 @@ function Step4({ session, onPatch, dispatch }: {
           {ex.days_per_week && ex.minutes_per_session && (
             <div className={`mt-2 rounded-lg px-3 py-1.5 text-xs font-medium
               ${whoExerciseOk ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'}`}>
-              {whoExerciseOk ? '✓ ตรงตามเกณฑ์ WHO (≥150 นาที/สัปดาห์)' : `⚠️ ยังน้อยกว่าเกณฑ์ WHO (${(ex.days_per_week * ex.minutes_per_session)} นาที/สัปดาห์)`}
+              {whoExerciseOk ? 'ตรงตามเกณฑ์ WHO (≥150 นาที/สัปดาห์)' : `⚠️ ยังน้อยกว่าเกณฑ์ WHO (${(ex.days_per_week * ex.minutes_per_session)} นาที/สัปดาห์)`}
             </div>
           )}
         </div>
@@ -846,7 +846,7 @@ function Step5({ session, onPatch, dispatch }: {
                 ${conditions.includes(c.key)
                   ? 'bg-sky-500/20 border-sky-500 text-sky-300'
                   : 'bg-slate-700/40 border-slate-600 text-slate-300 hover:border-slate-500'}`}>
-              {conditions.includes(c.key) ? '✓ ' : ''}{c.label}
+              {c.label}
             </button>
           ))}
         </div>
@@ -925,7 +925,7 @@ function Step6({ session, onPatch, dispatch }: {
                 ${selected
                   ? 'bg-sky-500/20 border-sky-500 text-sky-300'
                   : 'bg-slate-700/40 border-slate-600 text-slate-300 hover:border-slate-500'}`}>
-              {selected ? '✓ ' : ''}{c.label}
+              {c.label}
             </button>
           )
         })}

@@ -87,7 +87,7 @@ export function GuidelineTable({ guideline, showThaiFirst = true }: GuidelineTab
                       </span>
                       {isThaiOrg && (
                         <span className="block text-[10px] font-semibold text-teal-600 bg-teal-50 border border-teal-200 rounded-full px-2 py-0.5">
-                          🇹🇭 ไทย
+                          TH
                         </span>
                       )}
                       <p className="text-[10px] text-slate-400 leading-tight">{rec.orgFullTh}</p>
@@ -152,7 +152,7 @@ export function GuidelineTable({ guideline, showThaiFirst = true }: GuidelineTab
                   <span className={cn('rounded-full border px-2.5 py-1 text-xs font-bold', orgMeta.color)}>
                     {orgMeta.badge}
                   </span>
-                  {isThaiOrg && <span className="text-xs text-teal-600 font-medium">🇹🇭 แนวทางไทย</span>}
+                  {isThaiOrg && <span className="text-xs text-teal-600 font-medium">แนวทางไทย</span>}
                 </div>
                 <span className={cn('rounded-full border px-2 py-0.5 text-[10px] font-bold', gradeCfg.bg, gradeCfg.border, gradeCfg.color)}>
                   {gradeCfg.label}

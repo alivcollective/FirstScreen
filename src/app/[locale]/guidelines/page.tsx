@@ -159,7 +159,7 @@ export default function GuidelinesPage() {
                     {/* Thai guideline preview */}
                     {thaiOrg && (
                       <div className="mt-3 pt-3 border-t border-slate-100">
-                        <p className="text-[10px] font-semibold text-teal-600 mb-1">🇹🇭 แนวทางไทย:</p>
+                        <p className="text-[10px] font-semibold text-teal-600 mb-1">แนวทางไทย:</p>
                         <p className="text-xs text-slate-500 line-clamp-2">{thaiOrg.recommendation}</p>
                       </div>
                     )}

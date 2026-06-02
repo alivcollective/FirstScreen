@@ -1,13 +1,12 @@
 import { Link } from '@/i18n/navigation'
-import { Ribbon, Heart, Droplets, Brain, ArrowRight } from 'lucide-react'
+import { Ribbon, HeartPulse, Droplets, Brain, ArrowRight } from 'lucide-react'
 
-// Assessment cards — conversion-oriented with benefit statement + time
+// Assessment cards — vector icons only, no emojis
 const ASSESSMENTS = [
   {
     key: 'cancer',
     href: '/risk#cancer',
     icon: Ribbon,
-    emoji: '🎗',
     title: 'ความเสี่ยงมะเร็ง',
     benefit: 'คัดกรองมะเร็ง 5 ชนิดที่พบบ่อยในไทย',
     time: '5 นาที',
@@ -19,8 +18,7 @@ const ASSESSMENTS = [
   {
     key: 'heart',
     href: '/risk#cvd',
-    icon: Heart,
-    emoji: '❤️',
+    icon: HeartPulse,
     title: 'ความเสี่ยงหัวใจ',
     benefit: 'คำนวณความเสี่ยง CVD 10 ปีของคุณ',
     time: '3 นาที',
@@ -33,7 +31,6 @@ const ASSESSMENTS = [
     key: 'diabetes',
     href: '/risk#diabetes',
     icon: Droplets,
-    emoji: '🩸',
     title: 'ความเสี่ยงเบาหวาน',
     benefit: 'FINDRISC ปรับสำหรับคนเอเชีย',
     time: '2 นาที',
@@ -46,7 +43,6 @@ const ASSESSMENTS = [
     key: 'mental',
     href: '/risk#mental',
     icon: Brain,
-    emoji: '🧠',
     title: 'สุขภาพจิต',
     benefit: 'PHQ-9 ซึมเศร้า + GAD-7 วิตกกังวล',
     time: '3 นาที',
