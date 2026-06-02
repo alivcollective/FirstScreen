@@ -8,7 +8,7 @@ import {
   Menu, X, Globe, ChevronDown, Search,
   Heart, Activity, Stethoscope, Calendar, Building2,
   BookOpen, Shield, Brain, Ribbon, ArrowRight,
-  Scale, Microscope, FlaskConical, FileText, HeartPulse, MapPin,
+  Scale, Microscope, FlaskConical, FileText, HeartPulse, MapPin, Dumbbell,
 } from 'lucide-react'
 import {
   DropdownMenu,
@@ -51,6 +51,7 @@ const MEGA_MENUS = {
         heading: 'ตรวจอาการ',
         items: [
           { label: 'เลือกตำแหน่งอาการ', desc: 'Body Map — คลิกจุดที่มีอาการ', href: '/body-map', icon: MapPin },
+          { label: 'Athlete Pain Map', desc: 'นักกีฬา — ค้นหาอาการบาดเจ็บ', href: '/athlete', icon: Dumbbell },
           { label: 'ตรวจอาการ 7 ขั้นตอน', desc: 'OLDCARTS · Differential Diagnosis', href: '/symptoms', icon: Stethoscope },
           { label: 'อาการฉุกเฉิน', desc: 'สัญญาณที่ต้องโทร 1669', href: '/symptoms#emergency', icon: Shield },
         ],
