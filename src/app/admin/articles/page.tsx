@@ -71,6 +71,20 @@ export default function AdminArticlesPage() {
   return (
     <AdminLayout title="บทความ">
       <div className="flex flex-col h-[calc(100vh-3.5rem)]">
+        {/* Top action bar */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900 shrink-0">
+          <div>
+            <h2 className="text-sm font-bold text-white">บทความทั้งหมด</h2>
+            <p className="text-xs text-slate-500 mt-0.5">จัดการและเผยแพร่บทความสุขภาพ</p>
+          </div>
+          <Link
+            href="/admin/articles/new"
+            className="flex items-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors shadow-sm shadow-teal-900/40"
+          >
+            <Plus className="h-4 w-4" />
+            เพิ่มบทความ
+          </Link>
+        </div>
         <DataTable
           columns={columns} data={data as unknown as Record<string, unknown>[]}
           total={total} page={page} pageSize={20} loading={loading}

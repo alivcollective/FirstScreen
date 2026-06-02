@@ -5,7 +5,10 @@ import { ChevronDown } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 
-const SECTIONS = [
+// Admin link uses a regular <a> to bypass i18n routing
+import NextLink from 'next/link'
+
+const SECTIONS: { title: string; links: { label: string; href: string; subtle?: boolean; external?: boolean }[] }[] = [
   {
     title: 'แพลตฟอร์ม',
     links: [
@@ -24,6 +27,7 @@ const SECTIONS = [
       { label: 'ทีมแพทย์', href: '/medical-advisors' },
       { label: 'วิธีการ', href: '/methodology' },
       { label: 'ความน่าเชื่อถือ', href: '/trust' },
+      { label: 'Admin', href: '/admin', subtle: true },
     ],
   },
   {
@@ -35,9 +39,9 @@ const SECTIONS = [
       { label: 'ข้อจำกัดทางการแพทย์', href: '/trust' },
     ],
   },
-] as const
+]
 
-function AccordionSection({ title, links }: { title: string; links: readonly { label: string; href: string }[] }) {
+function AccordionSection({ title, links }: { title: string; links: { label: string; href: string; subtle?: boolean }[] }) {
   const [open, setOpen] = useState(false)
   return (
     <div className="border-b border-slate-800">
@@ -50,10 +54,19 @@ function AccordionSection({ title, links }: { title: string; links: readonly { l
       </button>
       {open && (
         <div className="pb-3 flex flex-col gap-2 pl-1">
-          {links.map(l => (
+          {links.map(l => l.subtle ? (
+            // Admin link bypasses i18n, rendered subtler
+            <NextLink
+              key={l.label}
+              href={l.href}
+              className="text-xs text-slate-700 hover:text-slate-500 transition-colors mt-1"
+            >
+              {l.label}
+            </NextLink>
+          ) : (
             <Link
               key={l.href + l.label}
-              href={l.href}
+              href={l.href as Parameters<typeof Link>[0]['href']}
               className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
             >
               {l.label}

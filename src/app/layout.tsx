@@ -107,6 +107,17 @@ export const metadata: Metadata = {
 
   category: "health",
 
+  icons: {
+    icon: [
+      { url: '/brand/firstscreen-icon.png', type: 'image/png' },
+      { url: '/brand/firstscreen-icon.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/brand/firstscreen-icon.png',
+  },
+
   // YMYL (Your Money or Your Life) — medical content signals
   other: {
     "rating": "general",
@@ -133,8 +144,12 @@ export default function RootLayout({
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Favicon */}
-        <link rel="icon" href="/brand/firstscreen-icon.png" type="image/png" />
+        {/* Favicon — FirstScreen icon (multiple sizes for all browsers) */}
+        <link rel="icon" href="/brand/firstscreen-icon.png" type="image/png" sizes="any" />
+        <link rel="icon" href="/brand/firstscreen-icon.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/brand/firstscreen-icon.png" type="image/png" sizes="16x16" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" sizes="180x180" />
+        <link rel="shortcut icon" href="/brand/firstscreen-icon.png" />
       </head>
       <body className="min-h-full flex flex-col font-sans">
         {/* Global WebSite JSON-LD */}
