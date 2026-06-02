@@ -65,7 +65,21 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
       }
     }
 
-    const { status, ...updates } = body
+    const { status, ...rawUpdates } = body
+
+    // Map ConditionFormData fields → actual DB column names.
+    // 'specialty' in the form → 'specialty_required' in the DB (migration 002).
+    // Strip empty strings for constrained columns so they don't fail CHECK constraints.
+    const updates: Record<string, unknown> = {}
+    for (const [k, v] of Object.entries(rawUpdates)) {
+      if (k === 'specialty') {
+        if (v) updates.specialty_required = v
+      } else if ((k === 'severity' || k === 'category') && v === '') {
+        // skip empty — would violate NOT NULL / CHECK
+      } else {
+        updates[k] = v
+      }
+    }
 
     // Apply field updates first
     if (Object.keys(updates).length > 0) {
