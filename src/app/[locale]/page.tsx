@@ -1,7 +1,6 @@
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import { HeroV2 } from '@/components/home/hero-v2'
-import { MissionQuote } from '@/components/home/mission-quote'
 import { PopularScreenings } from '@/components/home/popular-screenings'
 import { TrustBar } from '@/components/home/trust-bar'
 import { HowItWorks } from '@/components/home/how-it-works'
@@ -11,32 +10,31 @@ import { HealthNews } from '@/components/home/health-news'
 import { FinalCtaV2 } from '@/components/home/final-cta-v2'
 import { MobileStickyAssessmentCTA } from '@/components/shared/mobile-sticky-cta'
 
+// 7-section homepage — Hero merged with mission quote (no separate quote section)
 export default async function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1">
-        {/* S1: Hero */}
+      <main className="flex-1 pb-16 sm:pb-0">
+        {/* S1: Hero — headline + mission line + CTA (merged) */}
         <HeroV2 />
-        {/* S2: Mission Quote — emotional, premium */}
-        <MissionQuote />
-        {/* S3: Popular Screenings — horizontal scroll */}
+        {/* S2: Popular Screenings — horizontal scroll */}
         <PopularScreenings />
-        {/* S4: Trust Bar — compact metrics */}
+        {/* S3: Trust Bar — compact metrics row */}
         <TrustBar />
-        {/* S5: Why FirstScreen */}
+        {/* S4: Why FirstScreen — 3-step compact timeline */}
         <HowItWorks />
-        {/* S5: Assessment Cards — conversion-oriented with benefit + time */}
+        {/* S5: Assessment Cards — benefit + time */}
         <RiskCategories />
-        {/* S6: Why Trust Us — expandable WHO/USPSTF section */}
+        {/* S6: Why Trust Us — expandable WHO/USPSTF */}
         <TrustCompact />
-        {/* S7: Health Insights — 3 modern article cards */}
+        {/* S7: Health Insights */}
         <HealthNews />
-        {/* S8: Final CTA — with trust badges */}
+        {/* S8: Final CTA */}
         <FinalCtaV2 />
       </main>
       <Footer />
-      {/* Floating pill CTA — mobile only */}
+      {/* Floating pill — mobile only, above safe area */}
       <MobileStickyAssessmentCTA />
     </div>
   )

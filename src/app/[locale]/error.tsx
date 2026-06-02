@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import Link from 'next/link'
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react'
 
 export default function Error({
@@ -31,11 +32,11 @@ export default function Error({
           <RefreshCw className="h-4 w-4" />
           ลองใหม่
         </button>
-        <a href="/"
+        <Link href="/"
           className="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:text-white font-semibold px-5 py-3 text-sm transition-colors">
           <Home className="h-4 w-4" />
           หน้าหลัก
-        </a>
+        </Link>
       </div>
     </div>
   )

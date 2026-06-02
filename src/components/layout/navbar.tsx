@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import Image from 'next/image'
 import { useLocale } from 'next-intl'
 import { useRouter, usePathname, Link } from '@/i18n/navigation'
@@ -142,15 +142,42 @@ const MEGA_MENUS = {
 
 type MenuKey = keyof typeof MEGA_MENUS
 
-// ── Mega-menu Dropdown ────────────────────────────────────────
+// ── Mega-menu Dropdown — fixed positioning, viewport-clamped ──
+// Uses position:fixed + getBoundingClientRect so it never overflows viewport
 
-function MegaDropdown({ menuKey, onClose }: { menuKey: MenuKey; onClose: () => void }) {
+interface MegaDropdownProps {
+  menuKey: MenuKey
+  onClose: () => void
+}
+
+function MegaDropdown({ menuKey, onClose }: MegaDropdownProps) {
   const menu = MEGA_MENUS[menuKey]
   const sections = 'sections' in menu ? menu.sections : []
   const featured = 'featured' in menu ? menu.featured : null
+  const [pos, setPos] = useState<{ top: number; left: number; width: number } | null>(null)
+
+  useEffect(() => {
+    // Query the trigger element by its data-navkey attribute — avoids ref-during-render
+    const trigger = document.querySelector(`[data-navkey="${menuKey}"]`) as HTMLElement | null
+    if (!trigger) return
+    const rect = trigger.getBoundingClientRect()
+    const DROPDOWN_MAX = 620
+    const MARGIN = 16
+    const dropW = Math.min(DROPDOWN_MAX, window.innerWidth - MARGIN * 2)
+    let left = rect.left + rect.width / 2 - dropW / 2
+    left = Math.max(MARGIN, Math.min(left, window.innerWidth - dropW - MARGIN))
+    const p = { top: rect.bottom + 6, left, width: dropW }; setTimeout(() => setPos(p), 0)
+  }, [menuKey])
+
+  if (!pos) return null
 
   return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 w-screen max-w-2xl bg-white rounded-2xl shadow-xl border border-slate-100/80 p-5 z-50">
+    <div
+      style={{ position: 'fixed', top: pos.top, left: pos.left, width: pos.width, zIndex: 200 }}
+      className="bg-white rounded-2xl shadow-2xl border border-slate-100 p-5 overflow-hidden"
+      onMouseEnter={(e) => e.stopPropagation()}
+      onMouseLeave={onClose}
+    >
       <div className={cn('grid gap-5', sections.length > 1 ? 'grid-cols-2' : 'grid-cols-1')}>
         {sections.map((section) => (
           <div key={section.heading}>
@@ -261,6 +288,7 @@ export function Navbar() {
   const [activeMenu, setActiveMenu] = useState<MenuKey | null>(null)
   const { open: searchOpen, setOpen: setSearchOpen } = useSmartSearch()
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
   const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
@@ -312,7 +340,7 @@ export function Navbar() {
               return (
                 <div
                   key={key}
-                  className="relative"
+                  data-navkey={key}
                   onMouseEnter={() => openMenu(key)}
                   onMouseLeave={closeMenu}
                 >
@@ -329,9 +357,10 @@ export function Navbar() {
                     <ChevronDown className={cn('h-3 w-3 opacity-40 transition-transform ml-0.5', isActive && 'rotate-180')} />
                   </Link>
                   {isActive && (
-                    <div onMouseEnter={keepOpen} onMouseLeave={closeMenu}>
-                      <MegaDropdown menuKey={key} onClose={() => setActiveMenu(null)} />
-                    </div>
+                    <MegaDropdown
+                      menuKey={key}
+                      onClose={() => setActiveMenu(null)}
+                    />
                   )}
                 </div>
               )

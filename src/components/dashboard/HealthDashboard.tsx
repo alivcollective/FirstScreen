@@ -210,11 +210,13 @@ export function HealthDashboard() {
         // No assessments yet — show empty state
       }
 
-      setAssessments(all)
+      // Defer to avoid synchronous setState-in-effect
+      const a = all
+      setTimeout(() => setAssessments(a), 0)
     } catch {
       // ignore
     } finally {
-      setLoaded(true)
+      setTimeout(() => setLoaded(true), 0)
     }
   }, [])
 

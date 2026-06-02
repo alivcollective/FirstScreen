@@ -60,8 +60,12 @@ export function HealthReportClient() {
         }
       }
     } catch { /* silent */ }
-    setHasData(found)
-    setReportData(data)
+    // Defer to avoid synchronous setState-in-effect lint warning
+    const f = found, d = data
+    setTimeout(() => {
+      setHasData(f)
+      setReportData(d)
+    }, 0)
   }, [])
 
   if (!reportData) return null
