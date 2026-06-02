@@ -1,76 +1,98 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { getPathwayById, updatePathway, updatePathwayStatus } from '@/lib/db/pathways'
+import { createClient } from '@supabase/supabase-js'
+import type { ContentStatus, PathwayFormData } from '@/types/medical'
 
-function getSupabase() {
-  const { createClient } = require('@supabase/supabase-js')
+function getClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  if (!url || !key) return null
-  return createClient(url, key)
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!url || !key) throw new Error('Supabase not configured')
+  return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } })
 }
 
-export async function GET(
-  _: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+type RouteContext = { params: Promise<{ id: string }> }
+
+// ── GET — single pathway with all relations ───────────────────
+
+export async function GET(_req: NextRequest, { params }: RouteContext) {
   const { id } = await params
-  const sb = getSupabase()
-  if (!sb) return NextResponse.json({ error: 'No DB' }, { status: 500 })
-
-  const [pathway, regions, symptoms, questions, conditions, redFlags, recommendations, references] = await Promise.all([
-    sb.from('clinical_pathways').select('*').eq('id', id).single(),
-    sb.from('pathway_body_regions').select('*').eq('pathway_id', id).order('sort_order'),
-    sb.from('pathway_symptoms').select('*').eq('pathway_id', id).order('sort_order'),
-    sb.from('pathway_questions').select(`*, options:pathway_question_options(*)`).eq('pathway_id', id).order('sort_order'),
-    sb.from('pathway_conditions').select('*').eq('pathway_id', id).order('sort_order'),
-    sb.from('pathway_red_flags').select('*').eq('pathway_id', id).order('sort_order'),
-    sb.from('pathway_recommendations').select('*').eq('pathway_id', id).order('sort_order'),
-    sb.from('pathway_references').select('*').eq('pathway_id', id).order('sort_order'),
-  ])
-
-  if (!pathway.data) return NextResponse.json({ error: 'Not found' }, { status: 404 })
-
-  return NextResponse.json({
-    ...pathway.data,
-    body_regions: regions.data ?? [],
-    symptoms: symptoms.data ?? [],
-    questions: questions.data ?? [],
-    conditions: conditions.data ?? [],
-    red_flags: redFlags.data ?? [],
-    recommendations: recommendations.data ?? [],
-    references: references.data ?? [],
-  })
+  try {
+    const pathway = await getPathwayById(id)
+    if (!pathway) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    return NextResponse.json(pathway)
+  } catch (err) {
+    console.error('[admin/pathways/[id] GET]', err)
+    return NextResponse.json({ error: 'Server error' }, { status: 500 })
+  }
 }
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+// ── PATCH — partial update with publish validation ────────────
+
+export async function PATCH(req: NextRequest, { params }: RouteContext) {
   const { id } = await params
-  const body = await req.json()
-  const sb = getSupabase()
-  if (!sb) return NextResponse.json({ error: 'No DB' }, { status: 500 })
 
-  const { data, error } = await sb.from('clinical_pathways').update({
-    name_th: body.name_th, name_en: body.name_en,
-    description_th: body.description_th, specialty: body.specialty,
-    status: body.status, reviewer_name: body.reviewer_name,
-    reviewer_specialty: body.reviewer_specialty, review_date: body.review_date,
-    evidence_level: body.evidence_level,
-  }).eq('id', id).select().single()
+  let body: Partial<PathwayFormData> & { status?: ContentStatus }
+  try {
+    body = await req.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+  }
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-  return NextResponse.json(data)
+  try {
+    if (body.status === 'published') {
+      const existing = await getPathwayById(id)
+      if (!existing) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+
+      const evidenceLevel = body.evidence_level ?? existing.evidence_level
+      const reviewerName  = body.reviewer_name  ?? existing.reviewer_name
+
+      if (!evidenceLevel) {
+        return NextResponse.json(
+          { error: 'evidence_level is required before publishing', field: 'evidence_level' },
+          { status: 400 }
+        )
+      }
+      if (!reviewerName?.trim()) {
+        return NextResponse.json(
+          { error: 'reviewer_name is required before publishing', field: 'reviewer_name' },
+          { status: 400 }
+        )
+      }
+    }
+
+    const { status, ...updates } = body
+    if (Object.keys(updates).length > 0) {
+      await updatePathway(id, updates as Partial<PathwayFormData>)
+    }
+    if (status) {
+      await updatePathwayStatus(id, status, body.reviewer_name)
+    }
+
+    const updated = await getPathwayById(id)
+    return NextResponse.json(updated)
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Update failed'
+    console.error('[admin/pathways/[id] PATCH]', err)
+    return NextResponse.json({ error: msg }, { status: 500 })
+  }
 }
 
-export async function DELETE(
-  _: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const { id } = await params
-  const sb = getSupabase()
-  if (!sb) return NextResponse.json({ error: 'No DB' }, { status: 500 })
+// ── DELETE — soft delete ──────────────────────────────────────
 
-  const { error } = await sb.from('clinical_pathways').update({ status: 'archived' }).eq('id', id)
-  return error ? NextResponse.json({ error: error.message }, { status: 500 }) : NextResponse.json({ ok: true })
+export async function DELETE(_req: NextRequest, { params }: RouteContext) {
+  const { id } = await params
+  try {
+    const sb = getClient()
+    const { error } = await sb
+      .from('clinical_pathways')
+      .update({ status: 'archived', updated_at: new Date().toISOString() })
+      .eq('id', id)
+    if (error) throw new Error(error.message)
+    return NextResponse.json({ ok: true, status: 'archived' })
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Archive failed'
+    console.error('[admin/pathways/[id] DELETE]', err)
+    return NextResponse.json({ error: msg }, { status: 500 })
+  }
 }
