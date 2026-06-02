@@ -98,18 +98,32 @@ export interface KmsArticleInput {
   title_th: string
   title_en?: string
   excerpt_th?: string
+  excerpt_en?: string
   content?: Record<string, unknown>
+  content_th?: string    // plain text for DB storage / fallback
+  content_en?: string
   category_id?: string
   tags?: string[]
   status?: ArticleStatus
   author_id?: string
+  // Displayed author name (free text, no FK required for simple CMS)
+  author_name?: string
+  // Medical review
+  reviewed_by?: string
+  medical_reviewer?: string
+  review_date?: string
+  // References (free text block)
+  references?: string
   evidence_level?: EvidenceLevel
   seo_title?: string
   seo_description?: string
   seo_keywords?: string[]
   og_image_url?: string
+  cover_image_url?: string
+  canonical_url?: string
   read_time_minutes?: number
   is_featured?: boolean
+  published_at?: string
 }
 
 // ── Condition ─────────────────────────────────────────────────

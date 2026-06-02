@@ -7,12 +7,55 @@ import { ARTICLES } from '@/data/articles'
 import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
-  title: 'บทความสุขภาพ — Health Articles | FirstScreen',
+  title: 'บทความสุขภาพ | FirstScreen',
   description: 'บทความสุขภาพที่อิงหลักฐานทางการแพทย์ เกี่ยวกับการป้องกันโรค ตรวจคัดกรอง และดูแลสุขภาพ',
 }
 
-export default function ArticlesPage() {
-  const sorted = [...ARTICLES].sort(
+// Try CMS published articles first, fall back to local data
+async function getArticles() {
+  try {
+    const { createClient } = await import('@supabase/supabase-js')
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    if (url && key) {
+      const sb = createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } })
+      const { data } = await sb
+        .from('kms_articles')
+        .select('id,slug,title_th,excerpt_th,category_id,tags,read_time_minutes,published_at,updated_at,og_image_url')
+        .eq('status', 'published')
+        .order('published_at', { ascending: false })
+        .limit(50)
+      if (data && data.length > 0) {
+        return data.map(a => ({
+          slug: a.slug,
+          titleTh: a.title_th,
+          excerptTh: a.excerpt_th ?? '',
+          categoryTh: a.category_id ?? 'สุขภาพทั่วไป',
+          categoryColor: 'bg-teal-50 text-teal-700 border-teal-200',
+          category: a.category_id ?? 'general',
+          readTimeMinutes: a.read_time_minutes ?? 5,
+          date: a.published_at ?? a.updated_at ?? new Date().toISOString(),
+          source: 'cms' as const,
+        }))
+      }
+    }
+  } catch { /* fall through */ }
+  return ARTICLES.map(a => ({
+    slug: a.slug,
+    titleTh: a.titleTh,
+    excerptTh: a.excerptTh,
+    categoryTh: a.categoryTh,
+    categoryColor: a.categoryColor,
+    category: a.category,
+    readTimeMinutes: a.readTimeMinutes,
+    date: a.date,
+    source: 'local' as const,
+  }))
+}
+
+export default async function ArticlesPage() {
+  const raw = await getArticles()
+  const sorted = raw.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 
@@ -58,7 +101,7 @@ export default function ArticlesPage() {
                       <Calendar className="h-3 w-3" />
                       {new Date(a.date).toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' })}
                     </div>
-                    <span className="text-xs font-semibold text-teal-600 group-hover:gap-2 flex items-center gap-1 transition-all">
+                    <span className="text-xs font-semibold text-teal-600 flex items-center gap-1 group-hover:gap-2 transition-all">
                       อ่านต่อ <ArrowRight className="h-3.5 w-3.5" />
                     </span>
                   </div>

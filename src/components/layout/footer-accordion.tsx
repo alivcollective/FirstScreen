@@ -27,7 +27,7 @@ const SECTIONS: { title: string; links: { label: string; href: string; subtle?: 
       { label: 'ทีมแพทย์', href: '/medical-advisors' },
       { label: 'วิธีการ', href: '/methodology' },
       { label: 'ความน่าเชื่อถือ', href: '/trust' },
-      { label: 'Admin', href: '/admin', subtle: true },
+      { label: 'ผู้ดูแลระบบ', href: '/admin', subtle: true },
     ],
   },
   {
