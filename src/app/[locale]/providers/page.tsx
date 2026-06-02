@@ -8,7 +8,7 @@ import { HOSPITALS, PROVINCES } from '@/data/hospitals'
 import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
-  title: 'ค้นหาสถานพยาบาล — Hospital & Clinic Finder | Health Compass',
+  title: 'ค้นหาสถานพยาบาล — Hospital & Clinic Finder | FirstScreen',
   description: 'ค้นหาโรงพยาบาล คลินิก และศูนย์ตรวจคัดกรองในประเทศไทย พร้อมข้อมูลการรับรอง ประกัน และบริการ',
 }
 

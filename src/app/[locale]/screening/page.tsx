@@ -6,7 +6,7 @@ import { ScreeningPlannerClient } from '@/components/screening/ScreeningPlannerC
 import { Badge } from '@/components/ui/badge'
 
 export const metadata: Metadata = {
-  title: 'แผนตรวจคัดกรองสุขภาพ — Preventive Screening Planner | Health Compass',
+  title: 'แผนตรวจคัดกรองสุขภาพ — Preventive Screening Planner | FirstScreen',
   description: 'รับแผนตรวจคัดกรองสุขภาพเฉพาะบุคคล อ้างอิงแนวทาง สธ. NHSO และ Royal Colleges ครอบคลุมมะเร็ง หัวใจ เบาหวาน วัคซีน และอีกมาก',
 }
 

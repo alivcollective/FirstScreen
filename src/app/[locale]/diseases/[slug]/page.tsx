@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       'อาการ', 'สาเหตุ', 'การรักษา', 'การป้องกัน',
     ]
     return {
-      title: `${rich.nameTh_short} — อาการ สาเหตุ การรักษา | Health Compass`,
+      title: `${rich.nameTh_short} — อาการ สาเหตุ การรักษา | FirstScreen`,
       description,
       keywords,
       alternates: {
@@ -71,15 +71,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
       },
       openGraph: {
-        title: `${rich.nameTh_short} | Health Compass`,
+        title: `${rich.nameTh_short} | FirstScreen`,
         description,
         type: 'article',
         url: `${BASE_URL}/diseases/${slug}`,
-        siteName: 'Health Compass',
+        siteName: 'FirstScreen',
       },
       twitter: {
         card: 'summary',
-        title: `${rich.nameTh_short} | Health Compass`,
+        title: `${rich.nameTh_short} | FirstScreen`,
         description,
       },
     }
@@ -87,12 +87,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const legacy = getDiseaseData(slug)
   if (legacy) {
     return {
-      title: `${legacy.nameTh} | Health Compass`,
+      title: `${legacy.nameTh} | FirstScreen`,
       description: legacy.overview.th.slice(0, 160),
       alternates: { canonical: `${BASE_URL}/diseases/${slug}` },
     }
   }
-  return { title: 'ไม่พบข้อมูล | Health Compass' }
+  return { title: 'ไม่พบข้อมูล | FirstScreen' }
 }
 
 // ============================================================

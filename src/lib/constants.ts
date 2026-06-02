@@ -58,8 +58,8 @@ export const SCREENING_CATEGORIES = [
 ] as const
 
 export const MEDICAL_DISCLAIMER = {
-  en: 'Health Compass provides health education and navigation information only. This is not medical advice and should not replace consultation with a qualified healthcare professional. Always seek the advice of your physician for any medical conditions.',
-  th: 'Health Compass ให้ข้อมูลด้านสุขภาพเพื่อการศึกษาและการนำทางเท่านั้น ข้อมูลนี้ไม่ใช่คำแนะนำทางการแพทย์ และไม่ควรนำมาแทนที่การปรึกษากับผู้เชี่ยวชาญด้านการแพทย์ที่ผ่านการรับรอง',
+  en: 'FirstScreen provides health education and navigation information only. This is not medical advice and should not replace consultation with a qualified healthcare professional. Always seek the advice of your physician for any medical conditions.',
+  th: 'FirstScreen ให้ข้อมูลด้านสุขภาพเพื่อการศึกษาและการนำทางเท่านั้น ข้อมูลนี้ไม่ใช่คำแนะนำทางการแพทย์ และไม่ควรนำมาแทนที่การปรึกษากับผู้เชี่ยวชาญด้านการแพทย์ที่ผ่านการรับรอง',
 } as const
 
 export const EMERGENCY_NUMBERS = {

@@ -1,5 +1,5 @@
 /**
- * Clinical Database Query Helpers — Health Compass
+ * Clinical Database Query Helpers — FirstScreen
  * Type-safe wrappers for the clinical schema tables.
  *
  * All queries respect RLS policies.

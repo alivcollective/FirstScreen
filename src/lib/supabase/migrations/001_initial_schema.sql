@@ -1,8 +1,8 @@
 -- ============================================================
--- Health Compass — Initial Schema Migration
+-- FirstScreen — Initial Schema Migration
 -- Version: 001
 -- Run in: Supabase Dashboard > SQL Editor
--- Project: Health Compass Thailand
+-- Project: FirstScreen Thailand
 -- SAFETY: All tables store educational health data only.
 --         assessment_results is anonymous (no user_id).
 -- ============================================================

@@ -20,10 +20,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const article = getArticleBySlug(slug)
-  if (!article) return { title: 'ไม่พบบทความ | Health Compass' }
+  if (!article) return { title: 'ไม่พบบทความ | FirstScreen' }
 
   return {
-    title: `${article.titleTh} | Health Compass`,
+    title: `${article.titleTh} | FirstScreen`,
     description: article.excerptTh.slice(0, 160),
     keywords: article.tags,
     openGraph: {

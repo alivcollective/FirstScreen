@@ -1,4 +1,4 @@
-// Clinical TypeScript Types — Health Compass
+// Clinical TypeScript Types — FirstScreen
 // Matches Supabase tables in migrations/002_clinical_schema.sql
 // Standards: ICD-11, OLDCARTS, AUDIT-C, PHQ-9, GAD-7
 

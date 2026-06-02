@@ -7,7 +7,7 @@ import { ARTICLES } from '@/data/articles'
 import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
-  title: 'บทความสุขภาพ — Health Articles | Health Compass',
+  title: 'บทความสุขภาพ — Health Articles | FirstScreen',
   description: 'บทความสุขภาพที่อิงหลักฐานทางการแพทย์ เกี่ยวกับการป้องกันโรค ตรวจคัดกรอง และดูแลสุขภาพ',
 }
 

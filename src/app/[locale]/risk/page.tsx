@@ -10,7 +10,7 @@ import { CancerRiskAssessment } from '@/components/risk/cancer-risk-assessment'
 import { Badge } from '@/components/ui/badge'
 
 export const metadata: Metadata = {
-  title: 'ประเมินความเสี่ยงสุขภาพ — Risk Assessment | Health Compass',
+  title: 'ประเมินความเสี่ยงสุขภาพ — Risk Assessment | FirstScreen',
   description: 'ประเมินความเสี่ยงโรคหัวใจ เบาหวาน มะเร็ง และสุขภาพจิต ด้วยเครื่องคำนวณทางการแพทย์ที่ผ่านการรับรอง',
 }
 

@@ -69,69 +69,14 @@
   "howItWorks": {
     "badge": "How It Works",
     "title": "Simple. Fast. Evidence-Based.",
-    "step1Title": "Answer 3-Minute Questions",
+    "step1Title": "Answer Questions (3 min)",
     "step1Desc": "About your age, lifestyle, and family history",
-    "step2Title": "Get Your Risk Score",
+    "step2Title": "Receive Your Risk Assessment",
     "step2Desc": "Validated medical calculators, graded evidence",
-    "step3Title": "Receive Your Screening Plan",
+    "step3Title": "Get Your Personalized Screening Plan",
     "step3Desc": "Personalized to your profile and Thailand's guidelines",
-    "startBtn": "Start Now — It's Free"
-  },
-  "riskCats": {
-    "badge": "Risk Assessment",
-    "title": "What Would You Like to Assess?",
-    "subtitle": "Evidence-based risk assessments for the conditions that matter most in Thailand.",
-    "cancer": {
-      "title": "Cancer",
-      "types": "Breast · Cervical · Colorectal · Liver",
-      "cta": "Assess Risk"
-    },
-    "heart": {
-      "title": "Heart Disease",
-      "types": "CVD · Hypertension · Stroke",
-      "cta": "Assess Risk"
-    },
-    "diabetes": {
-      "title": "Diabetes",
-      "types": "Type 2 · Pre-diabetes · Metabolic",
-      "cta": "Assess Risk"
-    },
-    "general": {
-      "title": "General Health",
-      "types": "Screening · Lifestyle · Prevention",
-      "cta": "Assess Risk"
-    },
-    "viewAll": "View Full Assessment Suite"
-  },
-  "trustCompact": {
-    "label": "Clinical Standards We Follow",
-    "who": "WHO",
-    "whoDesc": "Global health guidelines",
-    "uspstf": "USPSTF",
-    "uspstfDesc": "Preventive care recommendations",
-    "nccn": "NCCN",
-    "nccnDesc": "Cancer screening guidelines",
-    "grade": "GRADE",
-    "gradeDesc": "Evidence quality framework",
-    "disclaimer": "Health Compass provides educational health information only. Not a substitute for professional medical advice."
-  },
-  "finalCta2": {
-    "eyebrow": "Takes only 3 minutes",
-    "title": "Understand Your Health Risks Today",
-    "subtitle": "Free · No registration · PDPA compliant · Never sells your data",
-    "btn": "Start Free Assessment",
-    "secondary": "View Disease Library"
-  },
-  "howItWorks": {
-    "badge": "How It Works",
-    "title": "Simple. Fast. Evidence-Based.",
-    "step1Title": "Answer 3-Minute Questions",
-    "step1Desc": "About your age, lifestyle, and family history",
-    "step2Title": "Get Your Risk Score",
-    "step2Desc": "Validated medical calculators, graded evidence",
-    "step3Title": "Receive Your Screening Plan",
-    "step3Desc": "Personalized to your profile and Thailand's guidelines",
-    "startBtn": "Start Now — It's Free"
+    "startBtn": "Start Now — Free",
+    "note": "Uses the same clinical guidelines as modern health screening systems"
   },
   "riskCats": {
     "badge": "Risk Assessment",
@@ -169,12 +114,14 @@
     "nccnDesc": "Cancer screening guidelines",
     "grade": "GRADE",
     "gradeDesc": "Evidence quality framework",
-    "disclaimer": "Health Compass provides educational health information only. Not a substitute for professional medical advice."
+    "disclaimer": "FirstScreen provides educational health information only. Not a substitute for professional medical advice.",
+    "expandLabel": "Why Trust FirstScreen?",
+    "subtitle": "Uses the same guidelines as leading global health organizations"
   },
   "finalCta2": {
-    "eyebrow": "Takes only 3 minutes",
-    "title": "Understand Your Health Risks Today",
-    "subtitle": "Free · No registration · PDPA compliant · Never sells your data",
+    "eyebrow": "Takes Only 3 Minutes",
+    "title": "Assess Your Health Risk Today",
+    "subtitle": "Free · No registration · PDPA compliant · Your data stays private",
     "btn": "Start Free Assessment",
     "secondary": "View Disease Library"
   },
@@ -309,12 +256,12 @@
   "trust": {
     "badge": "Trust Framework",
     "title": "Built on Medical Evidence. Reviewed by Experts.",
-    "subtitle": "In healthcare information, trust isn't optional — it's the product. Every architectural decision on Health Compass is designed around earning and maintaining that trust.",
+    "subtitle": "In healthcare information, trust isn't optional — it's the product. Every architectural decision on FirstScreen is designed around earning and maintaining that trust.",
     "pillars": {
       "evidence": {
         "title": "Evidence-Based",
         "detail": "GRADE Methodology",
-        "desc": "Every medical claim is graded using the GRADE methodology (A-D). Only systematic reviews, RCTs, and validated guidelines make it onto Health Compass."
+        "desc": "Every medical claim is graded using the GRADE methodology (A-D). Only systematic reviews, RCTs, and validated guidelines make it onto FirstScreen."
       },
       "reviewed": {
         "title": "Medically Reviewed",
@@ -339,15 +286,27 @@
       "noDiagnosis": {
         "title": "Never Diagnoses",
         "detail": "Education Only",
-        "desc": "Health Compass is a navigation and education platform. We explicitly and persistently disclaim diagnostic intent. We connect you to care — we don't replace it."
+        "desc": "FirstScreen is a navigation and education platform. We explicitly and persistently disclaim diagnostic intent. We connect you to care — we don't replace it."
       }
     },
     "gradeTitle": "Evidence Grading System (GRADE)",
     "grades": {
-      "a": { "label": "Strong", "desc": "Multiple high-quality RCTs or systematic reviews" },
-      "b": { "label": "Moderate", "desc": "Well-designed trials with consistent results" },
-      "c": { "label": "Limited", "desc": "Expert consensus or limited evidence" },
-      "d": { "label": "Expert Opinion", "desc": "Clinical experience and expert judgment" }
+      "a": {
+        "label": "Strong",
+        "desc": "Multiple high-quality RCTs or systematic reviews"
+      },
+      "b": {
+        "label": "Moderate",
+        "desc": "Well-designed trials with consistent results"
+      },
+      "c": {
+        "label": "Limited",
+        "desc": "Expert consensus or limited evidence"
+      },
+      "d": {
+        "label": "Expert Opinion",
+        "desc": "Clinical experience and expert judgment"
+      }
     },
     "partnersLabel": "Aligned with national & international health standards",
     "partners": {
@@ -367,13 +326,29 @@
   "riskPreview": {
     "badge": "Risk Assessment Platform",
     "title": "Know Your Risk Before Disease Knows You",
-    "subtitle": "Health Compass uses validated medical calculators to give you a clear picture of your personal health risks — not generic statistics, but your numbers, based on your profile.",
+    "subtitle": "FirstScreen uses validated medical calculators to give you a clear picture of your personal health risks — not generic statistics, but your numbers, based on your profile.",
     "cta": "Take Your Risk Assessment",
     "assessments": {
-      "cvd": { "title": "Cardiovascular Risk", "subtitle": "Framingham 10-Year Risk", "time": "3 min" },
-      "diabetes": { "title": "Diabetes Risk", "subtitle": "FINDRISC — Asian Adapted", "time": "2 min" },
-      "cancer": { "title": "Cancer Risk Profile", "subtitle": "Multi-Cancer Screening", "time": "5 min" },
-      "mental": { "title": "Mental Health Check", "subtitle": "PHQ-9 + GAD-7", "time": "2 min" }
+      "cvd": {
+        "title": "Cardiovascular Risk",
+        "subtitle": "Framingham 10-Year Risk",
+        "time": "3 min"
+      },
+      "diabetes": {
+        "title": "Diabetes Risk",
+        "subtitle": "FINDRISC — Asian Adapted",
+        "time": "2 min"
+      },
+      "cancer": {
+        "title": "Cancer Risk Profile",
+        "subtitle": "Multi-Cancer Screening",
+        "time": "5 min"
+      },
+      "mental": {
+        "title": "Mental Health Check",
+        "subtitle": "PHQ-9 + GAD-7",
+        "time": "2 min"
+      }
     },
     "sample": {
       "label": "Sample Result — Educational Demo",
@@ -463,7 +438,7 @@
   },
   "footer": {
     "disclaimerLabel": "Medical Disclaimer:",
-    "disclaimerText": "Health Compass provides health education and navigation information only. This is not medical advice and does not replace consultation with a qualified healthcare professional. Always seek physician advice for medical conditions.",
+    "disclaimerText": "FirstScreen provides educational health information only. This is not medical advice and does not replace consultation with a qualified healthcare professional.",
     "mission": "Our mission is to eliminate preventable suffering through better health navigation. Evidence-based. Globally scalable. Locally relevant.",
     "pdpa": "PDPA Compliant",
     "evidenceBased": "Evidence-Based",
@@ -493,11 +468,12 @@
       "pdpaCompliance": "PDPA Compliance"
     },
     "copyright": "© 2026 FirstScreen. All rights reserved. Thailand · Southeast Asia · Global.",
-    "availableIn": "Available in:"
+    "availableIn": "Available in:",
+    "viewMore": "Learn more"
   },
   "disclaimer": {
     "short": "Educational information only — not medical advice",
-    "full": "Health Compass provides health education and navigation information only. This is not medical advice and should not replace consultation with a qualified healthcare professional. Always seek the advice of your physician for any medical conditions.",
+    "full": "FirstScreen provides health education and navigation information only. This is not medical advice and should not replace consultation with a qualified healthcare professional. Always seek the advice of your physician for any medical conditions.",
     "educationalOnly": "Educational Information Only",
     "educationalDesc": "These risk assessments are educational tools based on validated medical calculators. They are not medical diagnoses. Results should always be discussed with a qualified healthcare professional."
   },
@@ -756,5 +732,101 @@
         "obese": "Obese (Asian)"
       }
     }
+  },
+  "trustBar": {
+    "users": "15K+",
+    "usersLabel": "Users",
+    "guidelines": "9",
+    "guidelinesLabel": "Disease Guidelines",
+    "verified": "100%",
+    "verifiedLabel": "Expert Reviewed",
+    "label": "Popular Screenings"
+  },
+  "screenings": {
+    "label": "Popular Screenings",
+    "heart": "Heart Disease",
+    "heartSub": "CVD Risk",
+    "cancer": "Cancer",
+    "cancerSub": "5 Types",
+    "diabetes": "Diabetes",
+    "diabetesSub": "FINDRISC",
+    "lungCancer": "Lung Cancer",
+    "lungCancerSub": "NLST",
+    "stroke": "Stroke",
+    "strokeSub": "Stroke Risk",
+    "viewAll": "View All",
+    "viewAllLabel": "All Assessments"
+  },
+  "assessments": {
+    "label": "Assessment Tools",
+    "title": "Assess Your Health Risk",
+    "viewAll": "View all assessments",
+    "cancer": {
+      "title": "Cancer Risk",
+      "benefit": "Screen for 5 major cancers common in Thailand",
+      "time": "5 min"
+    },
+    "heart": {
+      "title": "Heart Risk",
+      "benefit": "Calculate your 10-year CVD risk",
+      "time": "3 min"
+    },
+    "diabetes": {
+      "title": "Diabetes Risk",
+      "benefit": "FINDRISC — Asian-adjusted",
+      "time": "2 min"
+    },
+    "mental": {
+      "title": "Mental Health",
+      "benefit": "PHQ-9 Depression + GAD-7 Anxiety",
+      "time": "3 min"
+    }
+  },
+  "about": {
+    "title": "About FirstScreen",
+    "subtitle": "A preventive health screening platform built to help people recognize health risks before it is too late.",
+    "whyTitle": "Why We Exist",
+    "why1": "Many patient stories remind us that delayed detection can lead to missed opportunities for treatment, even when the best medical care is available.",
+    "why2": "Many diseases can be treated more effectively when detected early.",
+    "why3": "FirstScreen was created to help people understand symptoms, recognize potential risks, and seek appropriate medical care sooner.",
+    "missionBadge": "Our Mission",
+    "missionTitle": "Everyone Deserves the Chance to Know Their Risks",
+    "missionIntro": "We believe everyone deserves the opportunity to recognize health risks before it is too late. FirstScreen aims to help people:",
+    "missionPoint1": "Better understand their symptoms",
+    "missionPoint2": "Assess health risks earlier",
+    "missionPoint3": "Access trusted health information",
+    "missionPoint4": "Seek medical care sooner",
+    "missionClose": "Our mission is to reduce missed opportunities for treatment caused by delayed disease detection.",
+    "whatBadge": "What is FirstScreen",
+    "whatTitle": "Helping You Understand Your Health Better",
+    "card1Title": "Understand Symptoms Better",
+    "card1Desc": "FirstScreen helps organize symptoms, risks, and health information into clear and understandable guidance.",
+    "card2Title": "Not a Diagnostic Tool",
+    "card2Desc": "FirstScreen does not replace doctors or medical diagnosis. It helps users recognize when further evaluation or professional care may be appropriate.",
+    "principlesBadge": "Our Principles",
+    "principlesTitle": "What Makes Us Different",
+    "futureBadge": "The Future We Believe In",
+    "future1": "We envision a future where people can access trusted health information, recognize early warning signs, and seek medical care sooner.",
+    "future2": "Our goal is to make preliminary health screening more accessible to everyone.",
+    "disclaimerText": "FirstScreen is intended for educational and informational purposes only and does not provide medical diagnosis, treatment, or professional medical advice. Always consult a qualified healthcare professional regarding medical concerns.",
+    "ctaTitle": "Start Using FirstScreen",
+    "ctaSubtitle": "Free preliminary health risk assessment. No registration required.",
+    "ctaBtn": "Start Risk Assessment",
+    "ctaTrust": "Trust & Privacy Policy",
+    "p1Title": "Evidence-Based Information",
+    "p1Desc": "Referenced from internationally recognized medical sources including WHO, USPSTF, and Thai Department of Medical Services.",
+    "p2Title": "Prevention-Focused",
+    "p2Desc": "Supporting early detection of health risks before they develop into serious conditions.",
+    "p3Title": "Accessible to Everyone",
+    "p3Desc": "Making complex health information understandable for everyone, regardless of medical background.",
+    "p4Title": "Education, Not Diagnosis",
+    "p4Desc": "Helping users understand health information better, without diagnosing or replacing professional medical judgment.",
+    "p5Title": "Privacy First",
+    "p5Desc": "Respecting and protecting user personal data. PDPA compliant. No selling or sharing of data.",
+    "p6Title": "User-Centered",
+    "p6Desc": "Everything designed to help people make better health decisions."
+  },
+  "stickyCA": {
+    "label": "Start Free Assessment"
   }
 }

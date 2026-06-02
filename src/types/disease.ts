@@ -1,4 +1,4 @@
-// Rich Disease Type System for Health Compass Disease Library
+// Rich Disease Type System for FirstScreen Disease Library
 // SAFETY: Educational content only — NOT medical advice
 
 export type DiseaseCategory = 'cancer' | 'heart' | 'diabetes' | 'mental' | 'respiratory' | 'infectious' | 'general'

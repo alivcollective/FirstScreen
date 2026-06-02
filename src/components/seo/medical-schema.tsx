@@ -93,7 +93,7 @@ export function MedicalConditionSchema({
     'inLanguage': 'th',
     'publisher': {
       '@type': 'Organization',
-      'name': 'Health Compass',
+      'name': 'FirstScreen',
       'url': baseUrl,
     },
     // Medical disclaimer — required for YMYL content
@@ -178,7 +178,7 @@ export function ArticleSchema({
     },
     'publisher': {
       '@type': 'Organization',
-      'name': 'Health Compass',
+      'name': 'FirstScreen',
       'url': baseUrl,
     },
     'keywords': article.tags.join(', '),
@@ -198,8 +198,8 @@ export function WebSiteSchema({ baseUrl = 'https://healthcompass.th' }) {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    'name': 'Health Compass',
-    'alternateName': 'Health Compass Thailand',
+    'name': 'FirstScreen',
+    'alternateName': 'FirstScreen Thailand',
     'url': baseUrl,
     'description': 'แพลตฟอร์มนำทางสุขภาพเชิงป้องกัน ประเมินความเสี่ยงโรค วางแผนตรวจคัดกรอง ข้อมูลอ้างอิงหลักฐาน',
     'inLanguage': ['th', 'en'],
@@ -227,9 +227,9 @@ export function MedicalOrganizationSchema({ baseUrl = 'https://healthcompass.th'
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'MedicalOrganization',
-    'name': 'Health Compass',
+    'name': 'FirstScreen',
     'url': baseUrl,
-    'description': 'Health Compass เป็นแพลตฟอร์มข้อมูลสุขภาพเชิงป้องกัน ข้อมูลทุกชิ้นตรวจสอบโดยแพทย์ผู้เชี่ยวชาญ',
+    'description': 'FirstScreen เป็นแพลตฟอร์มข้อมูลสุขภาพเชิงป้องกัน ข้อมูลทุกชิ้นตรวจสอบโดยแพทย์ผู้เชี่ยวชาญ',
     'medicalSpecialty': [
       'Cardiology',
       'Oncology',

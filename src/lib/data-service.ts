@@ -1,5 +1,5 @@
 /**
- * Health Compass — Data Service Abstraction Layer
+ * FirstScreen — Data Service Abstraction Layer
  *
  * Two modes controlled by env var:
  *   NEXT_PUBLIC_USE_SUPABASE=false (default) → reads from /data/*.ts static files

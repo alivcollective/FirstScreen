@@ -5,8 +5,8 @@ import { Footer } from '@/components/layout/footer'
 import { MedicalDisclaimer } from '@/components/shared/medical-disclaimer'
 
 export const metadata: Metadata = {
-  title: 'Trust Center — นโยบายหลักฐานและความโปร่งใส | Health Compass',
-  description: 'รู้จัก Health Compass — นโยบายหลักฐาน กระบวนการตรวจสอบ ความเป็นส่วนตัว และสิ่งที่แพลตฟอร์มนี้ทำและไม่ทำได้',
+  title: 'Trust Center — นโยบายหลักฐานและความโปร่งใส | FirstScreen',
+  description: 'รู้จัก FirstScreen — นโยบายหลักฐาน กระบวนการตรวจสอบ ความเป็นส่วนตัว และสิ่งที่แพลตฟอร์มนี้ทำและไม่ทำได้',
 }
 
 const canDo = [
@@ -48,7 +48,7 @@ const trustPillars = [
   {
     icon: Lock,
     title: 'ความเป็นส่วนตัวมาก่อน (Privacy First)',
-    description: 'ข้อมูลสุขภาพของคุณเป็นของคุณ Health Compass ไม่ขายข้อมูลส่วนตัว การประเมินความเสี่ยงเบื้องต้นทำบนอุปกรณ์ของคุณโดยไม่ส่งข้อมูลไปยังเซิร์ฟเวอร์ แพลตฟอร์มเป็นไปตาม PDPA และ GDPR',
+    description: 'ข้อมูลสุขภาพของคุณเป็นของคุณ FirstScreen ไม่ขายข้อมูลส่วนตัว การประเมินความเสี่ยงเบื้องต้นทำบนอุปกรณ์ของคุณโดยไม่ส่งข้อมูลไปยังเซิร์ฟเวอร์ แพลตฟอร์มเป็นไปตาม PDPA และ GDPR',
   },
   {
     icon: Brain,
@@ -58,7 +58,7 @@ const trustPillars = [
   {
     icon: ShieldCheck,
     title: 'ขอบเขตของแพลตฟอร์ม',
-    description: 'Health Compass เป็นแพลตฟอร์มการนำทางสุขภาพและการให้ความรู้ ไม่ใช่แพลตฟอร์มการแพทย์ เราเชื่อมโยงคุณกับการดูแลที่เหมาะสม แต่ไม่แทนที่การดูแลนั้น',
+    description: 'FirstScreen เป็นแพลตฟอร์มการนำทางสุขภาพและการให้ความรู้ ไม่ใช่แพลตฟอร์มการแพทย์ เราเชื่อมโยงคุณกับการดูแลที่เหมาะสม แต่ไม่แทนที่การดูแลนั้น',
   },
 ]
 
@@ -79,7 +79,7 @@ export default function TrustPage() {
               ความโปร่งใสและความน่าเชื่อถือ
             </h1>
             <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
-              Health Compass สร้างขึ้นบนความโปร่งใส ความน่าเชื่อถือทางการแพทย์ และความเป็นส่วนตัวของผู้ใช้ หน้านี้อธิบายว่าเราทำงานอย่างไร ทำอะไรได้ และทำอะไรไม่ได้
+              FirstScreen สร้างขึ้นบนความโปร่งใส ความน่าเชื่อถือทางการแพทย์ และความเป็นส่วนตัวของผู้ใช้ หน้านี้อธิบายว่าเราทำงานอย่างไร ทำอะไรได้ และทำอะไรไม่ได้
             </p>
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function TrustPage() {
           {/* What we can and cannot do */}
           <section>
             <h2 className="text-2xl font-bold text-slate-900 mb-8">
-              Health Compass ทำอะไรได้และทำอะไรไม่ได้
+              FirstScreen ทำอะไรได้และทำอะไรไม่ได้
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-6">
@@ -153,7 +153,7 @@ export default function TrustPage() {
               ระบบจัดระดับหลักฐาน (GRADE)
             </h2>
             <p className="text-slate-600 mb-6 text-sm leading-relaxed">
-              Health Compass ใช้ระบบ GRADE (Grading of Recommendations Assessment, Development and Evaluation) ซึ่งเป็นมาตรฐานสากลที่ใช้โดย WHO, Cochrane, และองค์กรการแพทย์ชั้นนำทั่วโลก
+              FirstScreen ใช้ระบบ GRADE (Grading of Recommendations Assessment, Development and Evaluation) ซึ่งเป็นมาตรฐานสากลที่ใช้โดย WHO, Cochrane, และองค์กรการแพทย์ชั้นนำทั่วโลก
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
@@ -181,7 +181,7 @@ export default function TrustPage() {
               <div className="flex items-start gap-3">
                 <AlertCircle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="text-sm font-bold text-slate-800 mb-2">Health Compass ไม่ใช่บริการฉุกเฉิน</h3>
+                  <h3 className="text-sm font-bold text-slate-800 mb-2">FirstScreen ไม่ใช่บริการฉุกเฉิน</h3>
                   <p className="text-sm text-slate-600 leading-relaxed">
                     แพลตฟอร์มนี้ไม่สามารถรับมือกับสถานการณ์ฉุกเฉินทางการแพทย์ได้ หากคุณหรือผู้อื่นมีอาการฉุกเฉิน:
                   </p>
@@ -200,7 +200,7 @@ export default function TrustPage() {
             <h2 className="text-lg font-bold text-slate-900 mb-4">ข้อจำกัดความรับผิดชอบฉบับเต็ม</h2>
             <div className="space-y-3 text-sm text-slate-600 leading-relaxed">
               <p>
-                <strong>Health Compass</strong> ให้ข้อมูลสุขภาพเพื่อการศึกษาและการนำทางเท่านั้น
+                <strong>FirstScreen</strong> ให้ข้อมูลสุขภาพเพื่อการศึกษาและการนำทางเท่านั้น
                 ข้อมูลที่ปรากฏในแพลตฟอร์มนี้ไม่ใช่และไม่ควรถูกตีความว่าเป็นคำแนะนำทางการแพทย์
                 การวินิจฉัยโรค หรือการรักษา
               </p>

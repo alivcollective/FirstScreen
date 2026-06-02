@@ -15,7 +15,7 @@ export function createClient() {
   if (!isSupabaseConfigured) {
     if (process.env.NODE_ENV === 'development') {
       console.warn(
-        '[Health Compass] Supabase env vars not configured. ' +
+        '[FirstScreen] Supabase env vars not configured. ' +
         'Running in STATIC mode. Set NEXT_PUBLIC_SUPABASE_URL and ' +
         'NEXT_PUBLIC_SUPABASE_ANON_KEY to enable Supabase.'
       )

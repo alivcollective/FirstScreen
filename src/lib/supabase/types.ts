@@ -1,4 +1,4 @@
-// Supabase Database Type Definitions — Health Compass
+// Supabase Database Type Definitions — FirstScreen
 // Auto-generated structure. Run `npx supabase gen types typescript` after connecting.
 // These match /lib/supabase/migrations/001_initial_schema.sql exactly.
 

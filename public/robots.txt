@@ -1,4 +1,4 @@
-# Health Compass — robots.txt
+# FirstScreen — robots.txt
 # https://healthcompass.th
 
 User-agent: *

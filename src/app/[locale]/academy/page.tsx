@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/footer'
 import { Badge } from '@/components/ui/badge'
 
 export const metadata: Metadata = {
-  title: 'สถาบันสุขภาพ — Health Academy | Health Compass',
+  title: 'สถาบันสุขภาพ — Health Academy | FirstScreen',
   description: 'หลักสูตรสุขภาพที่อิงหลักฐานทางการแพทย์ เรียนรู้เรื่องโรคหัวใจ เบาหวาน มะเร็ง และการดูแลสุขภาพเชิงป้องกัน',
 }
 
