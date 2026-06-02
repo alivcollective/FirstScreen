@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS kms_athlete_conditions (
   recommendations JSONB DEFAULT '[]',
   when_to_seek_help_th TEXT,
 
-  urgency         urgency_type DEFAULT 'monitor',
+  urgency         urgency_type DEFAULT 'routine',
   evidence_level  evidence_level DEFAULT 'moderate',
 
   is_active       BOOLEAN DEFAULT true,

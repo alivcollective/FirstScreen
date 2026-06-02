@@ -5,33 +5,44 @@ import { NextResponse } from 'next/server'
 
 const intlMiddleware = createIntlMiddleware(routing)
 
-// Simple admin auth — checks for session cookie set by /admin/login
+// Must match the SESSION_SECRET fallback in /api/admin/auth/route.ts
+const EXPECTED_SESSION = process.env.ADMIN_SESSION_SECRET ?? 'fs-admin-secret-2026-xK9mP3qR'
+
 function adminAuthMiddleware(req: NextRequest) {
   const { pathname } = req.nextUrl
-  
-  // Login page always accessible
+
+  // Always allow the login page
   if (pathname === '/admin/login') return NextResponse.next()
-  
-  // Check admin session cookie
+
+  // Check session cookie
   const adminSession = req.cookies.get('admin_session')?.value
-  if (!adminSession || adminSession !== process.env.ADMIN_SESSION_SECRET) {
-    return NextResponse.redirect(new URL('/admin/login', req.url))
+  if (!adminSession || adminSession !== EXPECTED_SESSION) {
+    const loginUrl = new URL('/admin/login', req.url)
+    loginUrl.searchParams.set('from', pathname)
+    return NextResponse.redirect(loginUrl)
   }
+
   return NextResponse.next()
 }
 
 export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
-  
-  // Admin routes: apply simple auth, skip i18n
+
+  // Admin routes — check auth, skip i18n
   if (pathname.startsWith('/admin')) {
     return adminAuthMiddleware(req)
   }
-  
-  // All other routes: apply i18n middleware
+
+  // API routes — skip entirely (handled by Next.js API router)
+  if (pathname.startsWith('/api')) {
+    return NextResponse.next()
+  }
+
+  // Public routes — apply i18n
   return intlMiddleware(req)
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|_vercel|og|sitemap|robots|.*\\..*).*)'],
+  // Exclude: static files, _next internals, og, sitemap, robots
+  matcher: ['/((?!_next|_vercel|og|sitemap|robots|.*\\..*).*)'],
 }
