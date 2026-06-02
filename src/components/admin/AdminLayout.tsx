@@ -22,6 +22,7 @@ const NAV_SECTIONS = [
   {
     label: 'ฐานความรู้',
     items: [
+      { href: '/admin/clinical-pathways', icon: Activity, label: 'Clinical Pathways' },
       { href: '/admin/articles', icon: FileText, label: 'บทความ' },
       { href: '/admin/conditions', icon: Activity, label: 'โรคและภาวะ' },
       { href: '/admin/symptoms', icon: Stethoscope, label: 'อาการ' },
