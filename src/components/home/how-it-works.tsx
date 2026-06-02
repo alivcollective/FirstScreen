@@ -1,74 +1,43 @@
-import { getTranslations } from 'next-intl/server'
-import { ArrowRight } from 'lucide-react'
-import { ButtonLink } from '@/components/ui/button-link'
+// Why FirstScreen — compact timeline, ~220px max height
+// Replaces the verbose 3-column grid
 
-export async function HowItWorks() {
-  const t = await getTranslations()
+const STEPS = [
+  { n: 1, label: 'ตอบคำถาม 3 นาที' },
+  { n: 2, label: 'รับผลประเมินความเสี่ยง' },
+  { n: 3, label: 'รับแผนตรวจสุขภาพเฉพาะบุคคล' },
+] as const
 
-  const steps = [
-    {
-      num: '01',
-      titleKey: 'howItWorks.step1Title',
-      descKey: 'howItWorks.step1Desc',
-    },
-    {
-      num: '02',
-      titleKey: 'howItWorks.step2Title',
-      descKey: 'howItWorks.step2Desc',
-    },
-    {
-      num: '03',
-      titleKey: 'howItWorks.step3Title',
-      descKey: 'howItWorks.step3Desc',
-    },
-  ] as const
-
+export function HowItWorks() {
   return (
-    <section className="bg-white py-20 sm:py-24">
-      <div className="mx-auto max-w-5xl px-6">
+    <section className="bg-white border-b border-slate-100 py-10 sm:py-12">
+      <div className="mx-auto max-w-3xl px-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
 
-        {/* Header */}
-        <div className="text-center mb-16">
-          <p className="text-sm font-semibold uppercase tracking-widest text-teal-600 mb-3">
-            {t('howItWorks.badge')}
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">
-            {t('howItWorks.title')}
-          </h2>
-        </div>
-
-        {/* Steps */}
-        <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 mb-12">
-          {/* Connecting line — desktop only */}
-          <div className="hidden sm:block absolute top-7 left-[calc(16.67%+16px)] right-[calc(16.67%+16px)] h-px bg-gradient-to-r from-teal-200 via-teal-300 to-teal-200 z-0" />
-
-          {steps.map(({ num, titleKey, descKey }, i) => (
-            <div key={num} className="relative z-10 flex flex-col items-center text-center sm:px-4">
-              {/* Step number circle */}
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-teal-50 border-2 border-teal-200 mb-5 shadow-sm">
-                <span className="text-xl font-bold text-teal-600">{i + 1}</span>
+          <div className="flex flex-col">
+            <p className="text-xs font-semibold uppercase tracking-widest text-teal-600 mb-4">
+              ทำงานอย่างไร
+            </p>
+            {STEPS.map((s, i) => (
+              <div key={s.n} className="flex items-start gap-3">
+                <div className="flex flex-col items-center">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal-500 text-white text-xs font-bold">
+                    {s.n}
+                  </div>
+                  {i < STEPS.length - 1 && (
+                    <div className="w-px h-5 bg-teal-200 my-0.5" />
+                  )}
+                </div>
+                <p className="text-sm sm:text-base font-medium text-slate-800 pt-0.5">{s.label}</p>
               </div>
+            ))}
+          </div>
 
-              <h3 className="text-base font-semibold text-slate-900 mb-2 leading-snug">
-                {t(titleKey)}
-              </h3>
-              <p className="text-sm text-slate-500 leading-relaxed">
-                {t(descKey)}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Single CTA */}
-        <div className="flex justify-center">
-          <ButtonLink
-            href="/risk"
-            size="lg"
-            className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-8 py-4 rounded-xl"
-          >
-            {t('howItWorks.startBtn')}
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </ButtonLink>
+          <div className="sm:max-w-xs">
+            <p className="text-sm text-slate-500 leading-relaxed">
+              ใช้แนวทางเดียวกับระบบคัดกรองสุขภาพสมัยใหม่
+              อิงมาตรฐาน WHO, USPSTF และ สธ. ไทย
+            </p>
+          </div>
         </div>
       </div>
     </section>

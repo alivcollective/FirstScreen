@@ -2,43 +2,30 @@
 
 import { useState, useEffect } from 'react'
 import { ArrowRight } from 'lucide-react'
-import { useLocale } from 'next-intl'
 import { cn } from '@/lib/utils'
 
-interface MobileStickyCTAProps {
-  href?: string
-  className?: string
-}
-
-export function MobileStickyAssessmentCTA({ href = '/risk', className }: MobileStickyCTAProps) {
+// Floating pill CTA — smaller, blur background, doesn't block content
+export function MobileStickyAssessmentCTA() {
   const [visible, setVisible] = useState(false)
-  const locale = useLocale()
-  const isTh = locale !== 'en'
 
   useEffect(() => {
-    const handleScroll = () => {
-      setVisible(window.scrollY > 400)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => setVisible(window.scrollY > 500)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  if (!visible) return null
-
   return (
-    <div className={cn(
-      'fixed bottom-0 left-0 right-0 z-50 md:hidden',
-      'bg-gradient-to-r from-teal-600 to-teal-700 px-4 py-3 safe-area-pb',
-      'border-t border-teal-500/30 shadow-2xl shadow-teal-900/30',
-      'transform transition-transform duration-300',
-      visible ? 'translate-y-0' : 'translate-y-full',
-      className
-    )}>
+    <div
+      className={cn(
+        'fixed bottom-5 left-1/2 -translate-x-1/2 z-50 md:hidden transition-all duration-300',
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+      )}
+    >
       <a
-        href={href}
-        className="flex items-center justify-center gap-2 text-white font-semibold text-sm"
+        href="/risk"
+        className="flex items-center gap-2 rounded-full bg-teal-500/95 backdrop-blur-md border border-teal-400/30 px-6 py-3 text-sm font-semibold text-white shadow-xl shadow-teal-900/30 hover:bg-teal-400 transition-colors"
       >
-        {isTh ? 'เริ่มประเมินความเสี่ยงฟรี' : 'Start Free Risk Assessment'}
+        เริ่มประเมินฟรี
         <ArrowRight className="h-4 w-4" />
       </a>
     </div>
